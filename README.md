@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Indego Bike Dashboard
+
+A Next.js dashboard for visualizing Philadelphia's Indego bike share data.
+
+## Features
+
+- **Real-time station status** with 30-second refresh intervals
+- **Bike type breakdown** (Classic, Electric, Smart bikes)
+- **Interactive map** with color-coded station status
+- **Station search and filtering** by name or address
+- **Detailed station view** showing individual bike information
+- **System-wide statistics** with live availability metrics
+- **Historical trip analysis** with 365K+ Q2 2025 trips
+- **Trip analytics dashboard** with daily/hourly patterns
+- **Trip insights and trends** on main dashboard
+- **Dark mode support** with system preference detection
+- **Responsive dashboard** with modern UI components
+- **Table and map views** for station data
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Typography**: Inter font family
+- **UI Components**: shadcn/ui
+- **Theme**: next-themes (Dark/Light mode)
+- **Charts**: Recharts
+- **Maps**: Leaflet + React-Leaflet
+- **Data Processing**: Papa Parse (CSV parsing)
+- **Deployment**: Vercel
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone [your-repo-url]
+cd indego-dashboard
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+### Dark Mode
+The dashboard includes a theme toggle in the header that allows switching between:
+- **Light mode**: Traditional light theme with standard OpenStreetMap tiles
+- **Dark mode**: Dark theme with dark map tiles for low-light environments
+- **System**: Automatically follows your device's theme preference
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Key dark mode features:
+- All UI components automatically switch themes
+- Maps use dark tiles from CartoDB when in dark mode
+- Theme preference is saved and persists across sessions
+- Smooth transitions between light and dark themes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Data Sources
 
-## Deploy on Vercel
+This dashboard uses multiple data sources:
+- **BTS Status API**: `https://bts-status.bicycletransit.workers.dev/phl` (real-time station status)
+- **Trip Data CSV**: Indego Q2 2025 trip records (365,761 trips) stored locally
+- **Live Updates**: Station data refreshes every 30 seconds
+- **Historical Analysis**: Trip patterns, usage trends, and bike type distribution
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The app is configured for deployment on Vercel:
+
+1. Push to GitHub
+2. Import project in Vercel
+3. Deploy with default settings
+
+## Development
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+## License
+
+MIT
