@@ -1,26 +1,26 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { fetchSystemStats, type SystemStats } from "@/lib/api"
-import { Bike, MapPin, Activity, Zap, Brain, TrendingUp } from "lucide-react"
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { fetchSystemStats, type SystemStats } from "@/lib/api";
+import { Bike, MapPin, Activity, Zap, Brain, TrendingUp } from "lucide-react";
 
 export function DashboardStatsEnhanced() {
-  const [stats, setStats] = useState<SystemStats | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [stats, setStats] = useState<SystemStats | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadStats = async () => {
-      const data = await fetchSystemStats()
-      setStats(data)
-      setLoading(false)
-    }
-    
-    loadStats()
-    const interval = setInterval(loadStats, 30000) // Refresh every 30 seconds
-    
-    return () => clearInterval(interval)
-  }, [])
+      const data = await fetchSystemStats();
+      setStats(data);
+      setLoading(false);
+    };
+
+    loadStats();
+    const interval = setInterval(loadStats, 30000); // Refresh every 30 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const statCards = [
     {
@@ -46,12 +46,14 @@ export function DashboardStatsEnhanced() {
     },
     {
       title: "System Usage",
-      value: stats ? `${Math.round((stats.availableBikes / (stats.totalDocks || 1)) * 100)}%` : "--",
+      value: stats
+        ? `${Math.round((stats.availableBikes / (stats.totalDocks || 1)) * 100)}%`
+        : "--",
       icon: TrendingUp,
       description: loading ? "Loading..." : "Bikes available",
       color: "text-orange-600",
     },
-  ]
+  ];
 
   const bikeTypeCards = [
     {
@@ -72,7 +74,7 @@ export function DashboardStatsEnhanced() {
       icon: Brain,
       color: "text-indigo-600",
     },
-  ]
+  ];
 
   return (
     <div className="space-y-6">
@@ -102,7 +104,10 @@ export function DashboardStatsEnhanced() {
         <CardContent>
           <div className="grid gap-4 md:grid-cols-3">
             {bikeTypeCards.map((bike, index) => (
-              <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+              <div
+                key={index}
+                className="flex items-center justify-between p-4 border rounded-lg"
+              >
                 <div className="flex items-center gap-3">
                   <bike.icon className={`h-5 w-5 ${bike.color}`} />
                   <div>
@@ -115,11 +120,12 @@ export function DashboardStatsEnhanced() {
           </div>
           {stats && (
             <div className="mt-4 text-sm text-muted-foreground">
-              Total bikes in system: {stats.totalBikes} across {stats.totalStations} stations
+              Total bikes in system: {stats.totalBikes} across{" "}
+              {stats.totalStations} stations
             </div>
           )}
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

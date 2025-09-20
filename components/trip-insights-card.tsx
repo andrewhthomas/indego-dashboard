@@ -1,28 +1,34 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { loadTripData, type TripStats } from "@/lib/trip-data"
-import { TrendingUp, Clock, Route } from "lucide-react"
+import { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { loadTripData, type TripStats } from "@/lib/trip-data";
+import { TrendingUp, Clock, Route } from "lucide-react";
 
 export function TripInsightsCard() {
-  const [stats, setStats] = useState<TripStats | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [stats, setStats] = useState<TripStats | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadStats = async () => {
       try {
-        const data = await loadTripData()
-        setStats(data.stats)
+        const data = await loadTripData();
+        setStats(data.stats);
       } catch (error) {
-        console.error('Error loading trip insights:', error)
+        console.error("Error loading trip insights:", error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    
-    loadStats()
-  }, [])
+    };
+
+    loadStats();
+  }, []);
 
   if (loading) {
     return (
@@ -35,7 +41,7 @@ export function TripInsightsCard() {
           Loading insights...
         </CardContent>
       </Card>
-    )
+    );
   }
 
   if (!stats) {
@@ -49,16 +55,20 @@ export function TripInsightsCard() {
           Unable to load trip data
         </CardContent>
       </Card>
-    )
+    );
   }
 
   // Calculate some interesting insights
-  const electricPercentage = Math.round((stats.bikeTypeBreakdown.electric / stats.totalTrips) * 100)
-  const avgDailyTrips = Math.round(stats.totalTrips / stats.dailyTrips.length)
-  
+  const electricPercentage = Math.round(
+    (stats.bikeTypeBreakdown.electric / stats.totalTrips) * 100,
+  );
+  const avgDailyTrips = Math.round(stats.totalTrips / stats.dailyTrips.length);
+
   // Find the most active day
-  const mostActiveDay = stats.dailyTrips.reduce((max, day) => 
-    day.trips > max.trips ? day : max, { date: '', trips: 0 })
+  const mostActiveDay = stats.dailyTrips.reduce(
+    (max, day) => (day.trips > max.trips ? day : max),
+    { date: "", trips: 0 },
+  );
 
   return (
     <Card>
@@ -86,7 +96,7 @@ export function TripInsightsCard() {
             <div className="text-xs text-muted-foreground">Daily Avg</div>
           </div>
         </div>
-        
+
         <div className="space-y-2 pt-2 border-t">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Peak Hour:</span>
@@ -95,14 +105,15 @@ export function TripInsightsCard() {
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Most Active Day:</span>
             <span className="font-medium">
-              {new Date(mostActiveDay.date).toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric' 
-              })} ({mostActiveDay.trips.toLocaleString()} trips)
+              {new Date(mostActiveDay.date).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+              })}{" "}
+              ({mostActiveDay.trips.toLocaleString()} trips)
             </span>
           </div>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

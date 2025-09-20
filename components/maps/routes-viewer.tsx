@@ -1,29 +1,34 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Map, Table } from "lucide-react"
-import { type RouteData } from "@/lib/trip-data"
-import { RouteHeatmap } from "./route-heatmap"
-import { RoutesTable } from "./routes-table"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Map, Table } from "lucide-react";
+import { type RouteData } from "@/lib/trip-data";
+import { RouteHeatmap } from "./route-heatmap";
+import { RoutesTable } from "./routes-table";
 
 interface RoutesViewerProps {
-  routes: RouteData[]
-  loading?: boolean
+  routes: RouteData[];
+  loading?: boolean;
 }
 
-type ViewMode = 'map' | 'table'
+type ViewMode = "map" | "table";
 
 export function RoutesViewer({ routes, loading = false }: RoutesViewerProps) {
-  const [viewMode, setViewMode] = useState<ViewMode>('map')
+  const [viewMode, setViewMode] = useState<ViewMode>("map");
 
   if (loading) {
-    return viewMode === 'map' ? (
+    return viewMode === "map" ? (
       <RouteHeatmap routes={[]} loading={true} />
     ) : (
       <RoutesTable routes={[]} loading={true} />
-    )
+    );
   }
 
   return (
@@ -35,23 +40,24 @@ export function RoutesViewer({ routes, loading = false }: RoutesViewerProps) {
             <div>
               <CardTitle>Popular Routes</CardTitle>
               <CardDescription>
-                Most frequently used routes between stations ({routes.length} routes)
+                Most frequently used routes between stations ({routes.length}{" "}
+                routes)
               </CardDescription>
             </div>
             <div className="flex rounded-lg border p-1">
               <Button
-                variant={viewMode === 'map' ? 'default' : 'ghost'}
+                variant={viewMode === "map" ? "default" : "ghost"}
                 size="sm"
-                onClick={() => setViewMode('map')}
+                onClick={() => setViewMode("map")}
                 className="h-8 px-3"
               >
                 <Map className="h-4 w-4 mr-2" />
                 Map View
               </Button>
               <Button
-                variant={viewMode === 'table' ? 'default' : 'ghost'}
+                variant={viewMode === "table" ? "default" : "ghost"}
                 size="sm"
-                onClick={() => setViewMode('table')}
+                onClick={() => setViewMode("table")}
                 className="h-8 px-3"
               >
                 <Table className="h-4 w-4 mr-2" />
@@ -63,11 +69,11 @@ export function RoutesViewer({ routes, loading = false }: RoutesViewerProps) {
       </Card>
 
       {/* Content based on view mode */}
-      {viewMode === 'map' ? (
+      {viewMode === "map" ? (
         <RouteHeatmap routes={routes} loading={false} />
       ) : (
         <RoutesTable routes={routes} loading={false} />
       )}
     </div>
-  )
+  );
 }

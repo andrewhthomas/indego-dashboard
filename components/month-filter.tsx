@@ -1,34 +1,40 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { getAvailableMonths } from "@/lib/trip-data"
+import { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { getAvailableMonths } from "@/lib/trip-data";
 
 interface MonthFilterProps {
-  value: string
-  onValueChange: (value: string) => void
+  value: string;
+  onValueChange: (value: string) => void;
 }
 
 export function MonthFilter({ value, onValueChange }: MonthFilterProps) {
-  const [months, setMonths] = useState<Array<{value: string, label: string}>>([
-    { value: 'all', label: 'All Months' }
-  ])
-  const [loading, setLoading] = useState(true)
+  const [months, setMonths] = useState<Array<{ value: string; label: string }>>(
+    [{ value: "all", label: "All Months" }],
+  );
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadMonths = async () => {
       try {
-        const availableMonths = await getAvailableMonths()
-        setMonths(availableMonths)
+        const availableMonths = await getAvailableMonths();
+        setMonths(availableMonths);
       } catch (error) {
-        console.error('Error loading months:', error)
+        console.error("Error loading months:", error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    loadMonths()
-  }, [])
+    loadMonths();
+  }, []);
 
   return (
     <div className="flex items-center space-x-2">
@@ -48,5 +54,5 @@ export function MonthFilter({ value, onValueChange }: MonthFilterProps) {
         </SelectContent>
       </Select>
     </div>
-  )
+  );
 }

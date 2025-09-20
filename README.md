@@ -34,23 +34,26 @@ A Next.js dashboard for visualizing Philadelphia's Indego bike share data.
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone [your-repo-url]
 cd indego-dashboard
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Run the development server:
+
 ```bash
 npm run dev
 ```
@@ -60,12 +63,15 @@ npm run dev
 ## Usage
 
 ### Dark Mode
+
 The dashboard includes a theme toggle in the header that allows switching between:
+
 - **Light mode**: Traditional light theme with standard OpenStreetMap tiles
 - **Dark mode**: Dark theme with dark map tiles for low-light environments
 - **System**: Automatically follows your device's theme preference
 
 Key dark mode features:
+
 - All UI components automatically switch themes
 - Maps use dark tiles from CartoDB when in dark mode
 - Theme preference is saved and persists across sessions
@@ -74,6 +80,7 @@ Key dark mode features:
 ## Data Sources
 
 This dashboard uses multiple data sources:
+
 - **BTS Status API**: `https://bts-status.bicycletransit.workers.dev/phl` (real-time station status)
 - **Trip Data CSV**: Indego Q2 2025 trip records (365,761 trips) stored locally
 - **Live Updates**: Station data refreshes every 30 seconds

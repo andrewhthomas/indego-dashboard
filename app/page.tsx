@@ -1,7 +1,13 @@
-import { DashboardLayout } from "@/components/dashboard-layout"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { DashboardStatsEnhanced } from "@/components/dashboard-stats-enhanced"
-import { TripInsightsCard } from "@/components/trip-insights-card"
+import DashboardLayout from "@/components/dashboard-layout";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { DashboardStatsEnhanced } from "@/components/dashboard-stats-enhanced";
+import { TripInsightsCard } from "@/components/trip-insights-card";
 
 export default function Home() {
   return (
@@ -28,10 +34,10 @@ export default function Home() {
               Live system analytics will be displayed here
             </CardContent>
           </Card>
-          
+
           <TripInsightsCard />
         </div>
       </div>
     </DashboardLayout>
-  )
+  );
 }

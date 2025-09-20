@@ -1,17 +1,19 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { type TripStats } from "@/lib/trip-data"
-import { Bike, Clock, Route, TrendingUp, Calendar, Users } from "lucide-react"
-import { PlaceholderText } from "@/components/ui/placeholder-text"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { type TripStats } from "@/lib/trip-data";
+import { Bike, Clock, Route, TrendingUp, Calendar, Users } from "lucide-react";
+import { PlaceholderText } from "@/components/ui/placeholder-text";
 
 interface TripStatsOverviewProps {
-  stats: TripStats | null
-  loading?: boolean
+  stats: TripStats | null;
+  loading?: boolean;
 }
 
-export function TripStatsOverview({ stats, loading = false }: TripStatsOverviewProps) {
-
+export function TripStatsOverview({
+  stats,
+  loading = false,
+}: TripStatsOverviewProps) {
   const statCards = [
     {
       title: "Total Trips",
@@ -22,26 +24,34 @@ export function TripStatsOverview({ stats, loading = false }: TripStatsOverviewP
     },
     {
       title: "Avg Duration",
-      value: loading ? "15 min" : (stats ? `${stats.averageDuration} min` : "--"),
+      value: loading ? "15 min" : stats ? `${stats.averageDuration} min` : "--",
       icon: Clock,
       description: loading ? "Calculating..." : "Per trip",
       color: "text-green-600",
     },
     {
       title: "Total Distance",
-      value: loading ? "12,345 mi" : (stats ? `${stats.totalDistance.toLocaleString()} mi` : "--"),
+      value: loading
+        ? "12,345 mi"
+        : stats
+          ? `${stats.totalDistance.toLocaleString()} mi`
+          : "--",
       icon: Route,
       description: loading ? "Processing..." : "Combined",
       color: "text-purple-600",
     },
     {
       title: "Electric Bikes",
-      value: loading ? "45%" : (stats ? `${Math.round((stats.bikeTypeBreakdown.electric / stats.totalTrips) * 100)}%` : "--"),
+      value: loading
+        ? "45%"
+        : stats
+          ? `${Math.round((stats.bikeTypeBreakdown.electric / stats.totalTrips) * 100)}%`
+          : "--",
       icon: TrendingUp,
       description: loading ? "Analyzing..." : "Of all trips",
       color: "text-yellow-600",
     },
-  ]
+  ];
 
   return (
     <div className="space-y-6">
@@ -83,23 +93,31 @@ export function TripStatsOverview({ stats, loading = false }: TripStatsOverviewP
               <span className="text-sm text-muted-foreground">Peak Hour:</span>
               <span className="font-medium">
                 <PlaceholderText loading={loading}>
-                  {loading ? "14:00-15:00" : (stats?.peakHour || "--")}
+                  {loading ? "14:00-15:00" : stats?.peakHour || "--"}
                 </PlaceholderText>
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Most Popular Start:</span>
+              <span className="text-sm text-muted-foreground">
+                Most Popular Start:
+              </span>
               <span className="font-medium">
                 <PlaceholderText loading={loading}>
-                  {loading ? "Station 3025" : `Station ${stats?.mostPopularStartStation || "--"}`}
+                  {loading
+                    ? "Station 3025"
+                    : `Station ${stats?.mostPopularStartStation || "--"}`}
                 </PlaceholderText>
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Most Popular End:</span>
+              <span className="text-sm text-muted-foreground">
+                Most Popular End:
+              </span>
               <span className="font-medium">
                 <PlaceholderText loading={loading}>
-                  {loading ? "Station 3045" : `Station ${stats?.mostPopularEndStation || "--"}`}
+                  {loading
+                    ? "Station 3045"
+                    : `Station ${stats?.mostPopularEndStation || "--"}`}
                 </PlaceholderText>
               </span>
             </div>
@@ -133,7 +151,9 @@ export function TripStatsOverview({ stats, loading = false }: TripStatsOverviewP
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm">
-                      <PlaceholderText loading={true}>Indego365</PlaceholderText>
+                      <PlaceholderText loading={true}>
+                        Indego365
+                      </PlaceholderText>
                     </span>
                     <div className="flex items-center gap-2">
                       <span className="font-medium">
@@ -159,24 +179,33 @@ export function TripStatsOverview({ stats, loading = false }: TripStatsOverviewP
                   </div>
                 </>
               ) : stats ? (
-                Object.entries(stats.passholderTypeBreakdown).map(([type, count]) => (
-                  <div key={type} className="flex justify-between items-center">
-                    <span className="text-sm">{type}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium">{count.toLocaleString()}</span>
-                      <span className="text-xs text-muted-foreground">
-                        ({Math.round((count / stats.totalTrips) * 100)}%)
-                      </span>
+                Object.entries(stats.passholderTypeBreakdown).map(
+                  ([type, count]) => (
+                    <div
+                      key={type}
+                      className="flex justify-between items-center"
+                    >
+                      <span className="text-sm">{type}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">
+                          {count.toLocaleString()}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          ({Math.round((count / stats.totalTrips) * 100)}%)
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))
+                  ),
+                )
               ) : (
-                <div className="text-muted-foreground text-sm">No membership data available</div>
+                <div className="text-muted-foreground text-sm">
+                  No membership data available
+                </div>
               )}
             </div>
           </CardContent>
         </Card>
       </div>
     </div>
-  )
+  );
 }

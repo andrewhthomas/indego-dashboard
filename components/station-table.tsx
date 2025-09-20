@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useState, useMemo } from "react"
-import { Station } from "@/lib/api"
-import { Input } from "@/components/ui/input"
+import { useState, useMemo } from "react";
+import { Station } from "@/lib/api";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -10,37 +10,37 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { Search, Bike, Zap, Brain } from "lucide-react"
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Search, Bike, Zap, Brain } from "lucide-react";
 
 interface StationTableProps {
-  stations: Station[]
-  onStationClick?: (station: Station) => void
+  stations: Station[];
+  onStationClick?: (station: Station) => void;
 }
 
 export function StationTable({ stations, onStationClick }: StationTableProps) {
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
 
   const filteredStations = useMemo(() => {
     return stations.filter(
       (station) =>
         station.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        station.addressStreet.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  }, [stations, searchTerm])
+        station.addressStreet.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }, [stations, searchTerm]);
 
   const getStatusBadge = (status: string) => {
-    const variant = status === "Active" ? "default" : "secondary"
-    return <Badge variant={variant}>{status}</Badge>
-  }
+    const variant = status === "Active" ? "default" : "secondary";
+    return <Badge variant={variant}>{status}</Badge>;
+  };
 
   const getAvailabilityColor = (available: number, total: number) => {
-    const ratio = available / total
-    if (ratio > 0.5) return "text-green-600"
-    if (ratio > 0.2) return "text-yellow-600"
-    return "text-red-600"
-  }
+    const ratio = available / total;
+    if (ratio > 0.5) return "text-green-600";
+    if (ratio > 0.2) return "text-yellow-600";
+    return "text-red-600";
+  };
 
   return (
     <div className="space-y-4">
@@ -85,36 +85,63 @@ export function StationTable({ stations, onStationClick }: StationTableProps) {
           <TableBody>
             {filteredStations.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center text-muted-foreground">
+                <TableCell
+                  colSpan={7}
+                  className="text-center text-muted-foreground"
+                >
                   No stations found
                 </TableCell>
               </TableRow>
             ) : (
               filteredStations.map((station) => (
-                <TableRow 
-                  key={station.id} 
-                  className={onStationClick ? "cursor-pointer hover:bg-muted/50" : ""}
+                <TableRow
+                  key={station.id}
+                  className={
+                    onStationClick ? "cursor-pointer hover:bg-muted/50" : ""
+                  }
                   onClick={() => onStationClick?.(station)}
                 >
                   <TableCell className="font-medium">{station.name}</TableCell>
-                  <TableCell>{getStatusBadge(station.kioskPublicStatus)}</TableCell>
+                  <TableCell>
+                    {getStatusBadge(station.kioskPublicStatus)}
+                  </TableCell>
                   <TableCell className="text-center">
-                    <span className={getAvailabilityColor(station.classicBikesAvailable, station.totalDocks)}>
+                    <span
+                      className={getAvailabilityColor(
+                        station.classicBikesAvailable,
+                        station.totalDocks,
+                      )}
+                    >
                       {station.classicBikesAvailable}
                     </span>
                   </TableCell>
                   <TableCell className="text-center">
-                    <span className={getAvailabilityColor(station.electricBikesAvailable, station.totalDocks)}>
+                    <span
+                      className={getAvailabilityColor(
+                        station.electricBikesAvailable,
+                        station.totalDocks,
+                      )}
+                    >
                       {station.electricBikesAvailable}
                     </span>
                   </TableCell>
                   <TableCell className="text-center">
-                    <span className={getAvailabilityColor(station.smartBikesAvailable, station.totalDocks)}>
+                    <span
+                      className={getAvailabilityColor(
+                        station.smartBikesAvailable,
+                        station.totalDocks,
+                      )}
+                    >
                       {station.smartBikesAvailable}
                     </span>
                   </TableCell>
                   <TableCell className="text-center">
-                    <span className={getAvailabilityColor(station.docksAvailable, station.totalDocks)}>
+                    <span
+                      className={getAvailabilityColor(
+                        station.docksAvailable,
+                        station.totalDocks,
+                      )}
+                    >
                       {station.docksAvailable}/{station.totalDocks}
                     </span>
                   </TableCell>
@@ -132,5 +159,5 @@ export function StationTable({ stations, onStationClick }: StationTableProps) {
         Showing {filteredStations.length} of {stations.length} stations
       </div>
     </div>
-  )
+  );
 }

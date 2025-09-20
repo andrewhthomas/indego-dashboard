@@ -1,5 +1,11 @@
-import { DashboardLayout } from "@/components/dashboard-layout"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import DashboardLayout from "@/components/dashboard-layout";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function PatternsPage() {
   return (
@@ -27,9 +33,7 @@ export default function PatternsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Weekly Patterns</CardTitle>
-              <CardDescription>
-                Usage patterns by day of week
-              </CardDescription>
+              <CardDescription>Usage patterns by day of week</CardDescription>
             </CardHeader>
             <CardContent className="h-[300px] flex items-center justify-center text-muted-foreground">
               Weekly pattern chart coming soon
@@ -50,5 +54,5 @@ export default function PatternsPage() {
         </Card>
       </div>
     </DashboardLayout>
-  )
+  );
 }

@@ -5,6 +5,7 @@
 If you encounter errors like `ENOENT: no such file or directory` with `.next` build files, this is typically a build cache corruption issue.
 
 ### Quick Fix
+
 ```bash
 # Clear Next.js build cache
 rm -rf .next
@@ -17,13 +18,16 @@ npm run build
 ```
 
 ### Alternative Solutions
+
 1. **Clear all caches:**
+
    ```bash
    rm -rf .next node_modules/.cache
    npm run build
    ```
 
 2. **Full clean install:**
+
    ```bash
    rm -rf .next node_modules package-lock.json
    npm install
@@ -39,19 +43,25 @@ npm run build
 ## Common Issues
 
 ### Port Already in Use
+
 If you see port conflicts, Next.js will automatically use an available port. You can also specify a specific port:
+
 ```bash
 npm run dev -- -p 3002
 ```
 
 ### Large CSV File Loading Issues
+
 The trip data CSV is ~46MB. If you experience memory issues:
+
 - Ensure you have adequate system memory
 - Consider implementing pagination for very large datasets
 - Monitor browser developer tools for memory usage
 
 ### Dark Mode Issues
+
 If theme switching doesn't work:
+
 - Check browser developer tools for hydration errors
 - Clear browser localStorage: `localStorage.clear()`
 - Ensure JavaScript is enabled
@@ -76,11 +86,13 @@ If theme switching doesn't work:
 ## Development Environment
 
 ### Recommended System Requirements
+
 - Node.js 18+
 - 8GB+ RAM (for large CSV processing)
 - Modern browser with ES2020+ support
 
 ### File Structure
+
 ```
 indego-dashboard/
 ├── data/                    # CSV files (local storage)
@@ -93,6 +105,7 @@ indego-dashboard/
 ## Deployment Notes
 
 When deploying to Vercel:
+
 1. Ensure the `data/` directory is included in your git repository
 2. The CSV file (~46MB) should be within Vercel's file size limits
 3. Consider using Vercel's Edge Functions for better performance

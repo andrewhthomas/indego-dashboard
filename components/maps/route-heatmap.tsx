@@ -1,35 +1,53 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import dynamic from "next/dynamic"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { type RouteData } from "@/lib/trip-data"
-import { Skeleton } from "@/components/ui/skeleton"
-import "leaflet/dist/leaflet.css"
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { type RouteData } from "@/lib/trip-data";
+import { Skeleton } from "@/components/ui/skeleton";
+import "leaflet/dist/leaflet.css";
 
 // Dynamically import map components to avoid SSR issues
-const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false })
-const Polyline = dynamic(() => import('react-leaflet').then(mod => mod.Polyline), { ssr: false })
-const ThemeAwareTileLayer = dynamic(() => import('./theme-aware-tile-layer').then(mod => mod.ThemeAwareTileLayer), { ssr: false })
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false },
+);
+const Polyline = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Polyline),
+  { ssr: false },
+);
+const ThemeAwareTileLayer = dynamic(
+  () =>
+    import("./theme-aware-tile-layer").then((mod) => mod.ThemeAwareTileLayer),
+  { ssr: false },
+);
 
 interface RouteHeatmapProps {
-  routes: RouteData[]
-  loading?: boolean
+  routes: RouteData[];
+  loading?: boolean;
 }
 
 export function RouteHeatmap({ routes, loading = false }: RouteHeatmapProps) {
-  const [mounted, setMounted] = useState(false)
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
     return (
       <Card>
         <CardHeader>
           <CardTitle>Popular Routes</CardTitle>
-          <CardDescription>Most frequently used routes between stations</CardDescription>
+          <CardDescription>
+            Most frequently used routes between stations
+          </CardDescription>
         </CardHeader>
         <CardContent className="h-[500px]">
           <div className="h-full space-y-4 p-4">
@@ -37,7 +55,7 @@ export function RouteHeatmap({ routes, loading = false }: RouteHeatmapProps) {
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   if (loading) {
@@ -45,7 +63,9 @@ export function RouteHeatmap({ routes, loading = false }: RouteHeatmapProps) {
       <Card>
         <CardHeader>
           <CardTitle>Popular Routes</CardTitle>
-          <CardDescription>Most frequently used routes between stations</CardDescription>
+          <CardDescription>
+            Most frequently used routes between stations
+          </CardDescription>
         </CardHeader>
         <CardContent className="h-[500px]">
           <div className="h-full space-y-4 p-4">
@@ -63,7 +83,7 @@ export function RouteHeatmap({ routes, loading = false }: RouteHeatmapProps) {
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   if (routes.length === 0) {
@@ -71,7 +91,9 @@ export function RouteHeatmap({ routes, loading = false }: RouteHeatmapProps) {
       <Card>
         <CardHeader>
           <CardTitle>Popular Routes</CardTitle>
-          <CardDescription>Most frequently used routes between stations</CardDescription>
+          <CardDescription>
+            Most frequently used routes between stations
+          </CardDescription>
         </CardHeader>
         <CardContent className="h-[500px]">
           <div className="h-full flex items-center justify-center text-muted-foreground">
@@ -96,39 +118,40 @@ export function RouteHeatmap({ routes, loading = false }: RouteHeatmapProps) {
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   // Calculate max count for color scaling
-  const maxCount = Math.max(...routes.map(route => route.count))
-  const minCount = Math.min(...routes.map(route => route.count))
+  const maxCount = Math.max(...routes.map((route) => route.count));
+  const minCount = Math.min(...routes.map((route) => route.count));
 
   // Function to get color and weight based on trip count
   const getRouteStyle = (count: number) => {
-    const intensity = (count - minCount) / (maxCount - minCount)
-    
+    const intensity = (count - minCount) / (maxCount - minCount);
+
     // Color scale from blue (low) to red (high)
-    const red = Math.round(intensity * 255)
-    const blue = Math.round((1 - intensity) * 255)
-    const green = Math.round((1 - Math.abs(intensity - 0.5) * 2) * 100)
-    
+    const red = Math.round(intensity * 255);
+    const blue = Math.round((1 - intensity) * 255);
+    const green = Math.round((1 - Math.abs(intensity - 0.5) * 2) * 100);
+
     return {
       color: `rgb(${red}, ${green}, ${blue})`,
       weight: Math.max(2, intensity * 8), // Line thickness from 2 to 8 pixels
-      opacity: Math.max(0.4, intensity * 0.8 + 0.2) // Opacity from 0.4 to 1.0
-    }
-  }
+      opacity: Math.max(0.4, intensity * 0.8 + 0.2), // Opacity from 0.4 to 1.0
+    };
+  };
 
   // Center map on Philadelphia
-  const centerLat = 39.9526
-  const centerLon = -75.1652
+  const centerLat = 39.9526;
+  const centerLon = -75.1652;
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Popular Routes</CardTitle>
         <CardDescription>
-          Most frequently used routes between stations ({routes.length} routes shown)
+          Most frequently used routes between stations ({routes.length} routes
+          shown)
         </CardDescription>
       </CardHeader>
       <CardContent className="h-[500px]">
@@ -137,40 +160,42 @@ export function RouteHeatmap({ routes, loading = false }: RouteHeatmapProps) {
             center={[centerLat, centerLon]}
             zoom={12}
             className="h-full w-full rounded-md"
-            style={{ height: '100%', width: '100%' }}
+            style={{ height: "100%", width: "100%" }}
           >
             <ThemeAwareTileLayer />
-            
+
             {routes.map((route, index) => {
-              const style = getRouteStyle(route.count)
-              
+              const style = getRouteStyle(route.count);
+
               return (
                 <Polyline
                   key={`${route.startStation}-${route.endStation}-${index}`}
                   positions={[
                     [route.startLat, route.startLon],
-                    [route.endLat, route.endLon]
+                    [route.endLat, route.endLon],
                   ]}
                   pathOptions={style}
                   eventHandlers={{
                     mouseover: (e) => {
-                      const layer = e.target
-                      layer.bindTooltip(
-                        `Station ${route.startStation} → Station ${route.endStation}<br/>
+                      const layer = e.target;
+                      layer
+                        .bindTooltip(
+                          `Station ${route.startStation} → Station ${route.endStation}<br/>
                          ${route.count} trips`,
-                        { permanent: false, direction: 'top' }
-                      ).openTooltip()
+                          { permanent: false, direction: "top" },
+                        )
+                        .openTooltip();
                     },
                     mouseout: (e) => {
-                      const layer = e.target
-                      layer.closeTooltip()
-                    }
+                      const layer = e.target;
+                      layer.closeTooltip();
+                    },
                   }}
                 />
-              )
+              );
             })}
           </MapContainer>
-          
+
           {/* Legend */}
           <div className="absolute bottom-4 right-4 bg-background/90 backdrop-blur-sm border rounded-lg p-3 shadow-lg">
             <div className="text-sm font-medium mb-2">Trip Frequency</div>
@@ -192,5 +217,5 @@ export function RouteHeatmap({ routes, loading = false }: RouteHeatmapProps) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

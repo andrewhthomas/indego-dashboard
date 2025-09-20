@@ -1,156 +1,184 @@
-"use client"
+"use client";
 
-import { useState, useMemo, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Search, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react"
-import { type RouteData } from "@/lib/trip-data"
-import { getStationMapping, getStationName, type StationMapping } from "@/lib/station-mapping"
+import { useState, useMemo, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Search, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { type RouteData } from "@/lib/trip-data";
+import {
+  getStationMapping,
+  getStationName,
+  type StationMapping,
+} from "@/lib/station-mapping";
 
 interface RoutesTableProps {
-  routes: RouteData[]
-  loading?: boolean
+  routes: RouteData[];
+  loading?: boolean;
 }
 
-type SortField = 'count' | 'startStation' | 'endStation' | 'distance'
-type SortDirection = 'asc' | 'desc'
+type SortField = "count" | "startStation" | "endStation" | "distance";
+type SortDirection = "asc" | "desc";
 
 export function RoutesTable({ routes, loading = false }: RoutesTableProps) {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [sortField, setSortField] = useState<SortField>('count')
-  const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
-  const [stationMapping, setStationMapping] = useState<StationMapping>({})
-  const [mappingLoading, setMappingLoading] = useState(true)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortField, setSortField] = useState<SortField>("count");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
+  const [stationMapping, setStationMapping] = useState<StationMapping>({});
+  const [mappingLoading, setMappingLoading] = useState(true);
 
   // Load station name mapping
   useEffect(() => {
     const loadStationMapping = async () => {
       try {
-        setMappingLoading(true)
-        const mapping = await getStationMapping()
-        setStationMapping(mapping)
+        setMappingLoading(true);
+        const mapping = await getStationMapping();
+        setStationMapping(mapping);
       } catch (error) {
-        console.error('Error loading station mapping:', error)
+        console.error("Error loading station mapping:", error);
       } finally {
-        setMappingLoading(false)
+        setMappingLoading(false);
       }
-    }
+    };
 
-    loadStationMapping()
-  }, [])
+    loadStationMapping();
+  }, []);
 
   // Calculate distance between two points using Haversine formula
-  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
-    const R = 3959 // Earth's radius in miles
-    const dLat = (lat2 - lat1) * Math.PI / 180
-    const dLon = (lon2 - lon1) * Math.PI / 180
-    const a = 
-      Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-      Math.sin(dLon/2) * Math.sin(dLon/2)
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
-    return R * c
-  }
+  const calculateDistance = (
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number,
+  ): number => {
+    const R = 3959; // Earth's radius in miles
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
 
   // Process and sort routes
   const processedRoutes = useMemo(() => {
-    let filtered = routes.map(route => ({
+    let filtered = routes.map((route) => ({
       ...route,
-      distance: calculateDistance(route.startLat, route.startLon, route.endLat, route.endLon)
-    }))
+      distance: calculateDistance(
+        route.startLat,
+        route.startLon,
+        route.endLat,
+        route.endLon,
+      ),
+    }));
 
     // Filter based on search term (search both station IDs and names)
     if (searchTerm) {
-      filtered = filtered.filter(route => {
-        const startName = getStationName(route.startStation, stationMapping)
-        const endName = getStationName(route.endStation, stationMapping)
-        const term = searchTerm.toLowerCase()
-        
-        return route.startStation.toLowerCase().includes(term) ||
-               route.endStation.toLowerCase().includes(term) ||
-               startName.toLowerCase().includes(term) ||
-               endName.toLowerCase().includes(term)
-      })
+      filtered = filtered.filter((route) => {
+        const startName = getStationName(route.startStation, stationMapping);
+        const endName = getStationName(route.endStation, stationMapping);
+        const term = searchTerm.toLowerCase();
+
+        return (
+          route.startStation.toLowerCase().includes(term) ||
+          route.endStation.toLowerCase().includes(term) ||
+          startName.toLowerCase().includes(term) ||
+          endName.toLowerCase().includes(term)
+        );
+      });
     }
 
     // Sort based on current sort field and direction
     filtered.sort((a, b) => {
-      let aValue: number | string
-      let bValue: number | string
+      let aValue: number | string;
+      let bValue: number | string;
 
       switch (sortField) {
-        case 'count':
-          aValue = a.count
-          bValue = b.count
-          break
-        case 'startStation':
-          aValue = getStationName(a.startStation, stationMapping)
-          bValue = getStationName(b.startStation, stationMapping)
-          break
-        case 'endStation':
-          aValue = getStationName(a.endStation, stationMapping)
-          bValue = getStationName(b.endStation, stationMapping)
-          break
-        case 'distance':
-          aValue = a.distance
-          bValue = b.distance
-          break
+        case "count":
+          aValue = a.count;
+          bValue = b.count;
+          break;
+        case "startStation":
+          aValue = getStationName(a.startStation, stationMapping);
+          bValue = getStationName(b.startStation, stationMapping);
+          break;
+        case "endStation":
+          aValue = getStationName(a.endStation, stationMapping);
+          bValue = getStationName(b.endStation, stationMapping);
+          break;
+        case "distance":
+          aValue = a.distance;
+          bValue = b.distance;
+          break;
         default:
-          aValue = a.count
-          bValue = b.count
+          aValue = a.count;
+          bValue = b.count;
       }
 
-      if (typeof aValue === 'string' && typeof bValue === 'string') {
-        return sortDirection === 'asc' 
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        return sortDirection === "asc"
           ? aValue.localeCompare(bValue)
-          : bValue.localeCompare(aValue)
+          : bValue.localeCompare(aValue);
       } else {
-        return sortDirection === 'asc' 
+        return sortDirection === "asc"
           ? (aValue as number) - (bValue as number)
-          : (bValue as number) - (aValue as number)
+          : (bValue as number) - (aValue as number);
       }
-    })
+    });
 
-    return filtered
-  }, [routes, searchTerm, sortField, sortDirection, stationMapping])
+    return filtered;
+  }, [routes, searchTerm, sortField, sortDirection, stationMapping]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
-      setSortField(field)
-      setSortDirection('desc')
+      setSortField(field);
+      setSortDirection("desc");
     }
-  }
+  };
 
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) {
-      return <ArrowUpDown className="h-4 w-4" />
+      return <ArrowUpDown className="h-4 w-4" />;
     }
-    return sortDirection === 'asc' 
-      ? <ArrowUp className="h-4 w-4" />
-      : <ArrowDown className="h-4 w-4" />
-  }
+    return sortDirection === "asc" ? (
+      <ArrowUp className="h-4 w-4" />
+    ) : (
+      <ArrowDown className="h-4 w-4" />
+    );
+  };
 
   const getIntensityColor = (count: number, maxCount: number) => {
-    const intensity = count / maxCount
-    if (intensity >= 0.8) return "bg-red-500"
-    if (intensity >= 0.6) return "bg-orange-500"
-    if (intensity >= 0.4) return "bg-yellow-500"
-    if (intensity >= 0.2) return "bg-blue-500"
-    return "bg-gray-500"
-  }
+    const intensity = count / maxCount;
+    if (intensity >= 0.8) return "bg-red-500";
+    if (intensity >= 0.6) return "bg-orange-500";
+    if (intensity >= 0.4) return "bg-yellow-500";
+    if (intensity >= 0.2) return "bg-blue-500";
+    return "bg-gray-500";
+  };
 
-  const maxCount = Math.max(...routes.map(r => r.count), 1)
+  const maxCount = Math.max(...routes.map((r) => r.count), 1);
 
   if (loading) {
     return (
       <Card>
         <CardHeader>
           <CardTitle>Popular Routes</CardTitle>
-          <CardDescription>Most frequently used routes between stations</CardDescription>
+          <CardDescription>
+            Most frequently used routes between stations
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -172,7 +200,7 @@ export function RoutesTable({ routes, loading = false }: RoutesTableProps) {
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   if (routes.length === 0) {
@@ -180,7 +208,9 @@ export function RoutesTable({ routes, loading = false }: RoutesTableProps) {
       <Card>
         <CardHeader>
           <CardTitle>Popular Routes</CardTitle>
-          <CardDescription>Most frequently used routes between stations</CardDescription>
+          <CardDescription>
+            Most frequently used routes between stations
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="text-center py-8 text-muted-foreground">
@@ -203,7 +233,7 @@ export function RoutesTable({ routes, loading = false }: RoutesTableProps) {
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
@@ -211,7 +241,8 @@ export function RoutesTable({ routes, loading = false }: RoutesTableProps) {
       <CardHeader>
         <CardTitle>Popular Routes</CardTitle>
         <CardDescription>
-          Most frequently used routes between stations ({processedRoutes.length} of {routes.length} routes shown)
+          Most frequently used routes between stations ({processedRoutes.length}{" "}
+          of {routes.length} routes shown)
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -237,44 +268,44 @@ export function RoutesTable({ routes, loading = false }: RoutesTableProps) {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleSort('startStation')}
+                        onClick={() => handleSort("startStation")}
                         className="h-8 text-xs font-medium"
                       >
                         Start Station
-                        {getSortIcon('startStation')}
+                        {getSortIcon("startStation")}
                       </Button>
                     </th>
                     <th className="p-3 text-left">
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleSort('endStation')}
+                        onClick={() => handleSort("endStation")}
                         className="h-8 text-xs font-medium"
                       >
                         End Station
-                        {getSortIcon('endStation')}
+                        {getSortIcon("endStation")}
                       </Button>
                     </th>
                     <th className="p-3 text-left">
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleSort('distance')}
+                        onClick={() => handleSort("distance")}
                         className="h-8 text-xs font-medium"
                       >
                         Distance
-                        {getSortIcon('distance')}
+                        {getSortIcon("distance")}
                       </Button>
                     </th>
                     <th className="p-3 text-left">
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleSort('count')}
+                        onClick={() => handleSort("count")}
                         className="h-8 text-xs font-medium"
                       >
                         Trip Count
-                        {getSortIcon('count')}
+                        {getSortIcon("count")}
                       </Button>
                     </th>
                     <th className="p-3 text-left text-xs font-medium text-muted-foreground">
@@ -284,17 +315,21 @@ export function RoutesTable({ routes, loading = false }: RoutesTableProps) {
                 </thead>
                 <tbody>
                   {processedRoutes.map((route, index) => (
-                    <tr key={`${route.startStation}-${route.endStation}`} className="border-b hover:bg-muted/25">
+                    <tr
+                      key={`${route.startStation}-${route.endStation}`}
+                      className="border-b hover:bg-muted/25"
+                    >
                       <td className="p-3">
                         <div className="space-y-1">
                           <div className="font-medium text-sm">
                             {getStationName(route.startStation, stationMapping)}
                           </div>
-                          {!mappingLoading && stationMapping[route.startStation] && (
-                            <div className="text-xs text-muted-foreground font-mono">
-                              ID: {route.startStation}
-                            </div>
-                          )}
+                          {!mappingLoading &&
+                            stationMapping[route.startStation] && (
+                              <div className="text-xs text-muted-foreground font-mono">
+                                ID: {route.startStation}
+                              </div>
+                            )}
                         </div>
                       </td>
                       <td className="p-3">
@@ -302,11 +337,12 @@ export function RoutesTable({ routes, loading = false }: RoutesTableProps) {
                           <div className="font-medium text-sm">
                             {getStationName(route.endStation, stationMapping)}
                           </div>
-                          {!mappingLoading && stationMapping[route.endStation] && (
-                            <div className="text-xs text-muted-foreground font-mono">
-                              ID: {route.endStation}
-                            </div>
-                          )}
+                          {!mappingLoading &&
+                            stationMapping[route.endStation] && (
+                              <div className="text-xs text-muted-foreground font-mono">
+                                ID: {route.endStation}
+                              </div>
+                            )}
                         </div>
                       </td>
                       <td className="p-3 text-sm text-muted-foreground">
@@ -320,7 +356,9 @@ export function RoutesTable({ routes, loading = false }: RoutesTableProps) {
                           <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
                             <div
                               className={`h-full transition-all ${getIntensityColor(route.count, maxCount)}`}
-                              style={{ width: `${(route.count / maxCount) * 100}%` }}
+                              style={{
+                                width: `${(route.count / maxCount) * 100}%`,
+                              }}
                             />
                           </div>
                           <Badge variant="secondary" className="text-xs">
@@ -343,5 +381,5 @@ export function RoutesTable({ routes, loading = false }: RoutesTableProps) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
