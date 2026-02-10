@@ -78,61 +78,70 @@ function calculateDistance(
   return R * c;
 }
 
+const BLOB_BASE_URL =
+  "https://oilg24vboskpv84u.public.blob.vercel-storage.com";
+const QUARTER_FILES = [
+  "indego-trips-2025-q1.csv",
+  "indego-trips-2025-q2.csv",
+  "indego-trips-2025-q3.csv",
+  "indego-trips-2025-q4.csv",
+];
+
+function parseCsv(csvText: string): Promise<TripRecord[]> {
+  return new Promise((resolve, reject) => {
+    Papa.parse<TripRecord>(csvText, {
+      header: true,
+      skipEmptyLines: true,
+      transform: (value: string, header: string) => {
+        if (
+          [
+            "duration",
+            "start_lat",
+            "start_lon",
+            "end_lat",
+            "end_lon",
+            "plan_duration",
+          ].includes(header)
+        ) {
+          return parseFloat(value) || 0;
+        }
+        return value;
+      },
+      complete: (results) => resolve(results.data),
+      error: (error: unknown) => reject(error),
+    });
+  });
+}
+
 export async function loadTripData(
   monthFilter?: string,
 ): Promise<ProcessedTripData> {
   try {
-    const response = await fetch("/api/trips/data");
-    if (!response.ok) {
-      throw new Error("Failed to load trip data");
+    // Fetch all quarter CSVs directly from blob storage in parallel
+    const responses = await Promise.all(
+      QUARTER_FILES.map((file) => fetch(`${BLOB_BASE_URL}/${file}`)),
+    );
+
+    const failedIdx = responses.findIndex((r) => !r.ok);
+    if (failedIdx !== -1) {
+      throw new Error(`Failed to fetch ${QUARTER_FILES[failedIdx]}`);
     }
 
-    const csvText = await response.text();
+    const csvTexts = await Promise.all(responses.map((r) => r.text()));
+    const parsedArrays = await Promise.all(csvTexts.map(parseCsv));
+    let trips = parsedArrays.flat();
 
-    return new Promise((resolve, reject) => {
-      Papa.parse<TripRecord>(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        transform: (value: string, header: string) => {
-          // Transform numeric fields
-          if (
-            [
-              "duration",
-              "start_lat",
-              "start_lon",
-              "end_lat",
-              "end_lon",
-              "plan_duration",
-            ].includes(header)
-          ) {
-            return parseFloat(value) || 0;
-          }
-          return value;
-        },
-        complete: (results) => {
-          try {
-            let trips = results.data;
-
-            // Apply month filter if specified
-            if (monthFilter && monthFilter !== "all") {
-              trips = trips.filter((trip) => {
-                const tripDate = new Date(trip.start_time);
-                const tripMonth = `${tripDate.getFullYear()}-${String(tripDate.getMonth() + 1).padStart(2, "0")}`;
-                return tripMonth === monthFilter;
-              });
-            }
-
-            const stats = calculateTripStats(trips);
-            resolve({ trips, stats });
-          } catch (error) {
-            reject(error);
-          }
-        },
-        error: (error: unknown) => {
-          reject(error);
-        },
+    // Apply month filter if specified
+    if (monthFilter && monthFilter !== "all") {
+      trips = trips.filter((trip) => {
+        const tripDate = new Date(trip.start_time);
+        const tripMonth = `${tripDate.getFullYear()}-${String(tripDate.getMonth() + 1).padStart(2, "0")}`;
+        return tripMonth === monthFilter;
       });
-    });
+    }
+
+    const stats = calculateTripStats(trips);
+    return { trips, stats };
   } catch (error) {
     console.error("Error loading trip data:", error);
     throw error;
