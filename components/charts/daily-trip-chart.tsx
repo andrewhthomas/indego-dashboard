@@ -131,7 +131,7 @@ const defaultChartData = [
 const chartConfig = {
   trips: {
     label: "Daily Trips",
-    color: "hsl(var(--primary))",
+    color: "var(--color-chart-1)",
   },
 } satisfies ChartConfig;
 
