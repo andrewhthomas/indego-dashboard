@@ -148,7 +148,8 @@ export function DailyTripChart({ data }: DailyTripChartProps) {
   const chartData = data || defaultChartData;
   const filteredData = chartData.filter((item) => {
     const date = new Date(item.date);
-    const referenceDate = new Date("2024-06-30");
+    // Use the last date in the dataset as the reference point
+    const referenceDate = new Date(chartData[chartData.length - 1].date);
     let daysToSubtract = 90;
     if (timeRange === "30d") {
       daysToSubtract = 30;
