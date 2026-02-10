@@ -32,6 +32,7 @@ export interface TripStats {
   totalTrips: number;
   averageDuration: number;
   totalDistance: number;
+  tripsWithDistance: number;
   mostPopularStartStation: string;
   mostPopularEndStation: string;
   peakHour: string;
@@ -176,6 +177,7 @@ function calculateTripStats(trips: TripRecord[]): TripStats {
       totalTrips: 0,
       averageDuration: 0,
       totalDistance: 0,
+      tripsWithDistance: 0,
       mostPopularStartStation: "",
       mostPopularEndStation: "",
       peakHour: "",
@@ -193,8 +195,13 @@ function calculateTripStats(trips: TripRecord[]): TripStats {
   const totalDuration = trips.reduce((sum, trip) => sum + trip.duration, 0);
   const averageDuration = Math.round(totalDuration / totalTrips);
 
-  // Calculate total distance
+  // Calculate total distance (skip trips with missing coordinates)
+  let tripsWithDistance = 0;
   const totalDistance = trips.reduce((sum, trip) => {
+    if (!trip.start_lat || !trip.start_lon || !trip.end_lat || !trip.end_lon) {
+      return sum;
+    }
+    tripsWithDistance++;
     return (
       sum +
       calculateDistance(
@@ -307,6 +314,7 @@ function calculateTripStats(trips: TripRecord[]): TripStats {
     totalTrips,
     averageDuration,
     totalDistance: Math.round(totalDistance),
+    tripsWithDistance,
     mostPopularStartStation,
     mostPopularEndStation,
     peakHour,

@@ -326,8 +326,10 @@ export function TripsAnalytics() {
                           <span className="text-sm">Avg Trip Distance:</span>
                           <span className="font-medium">
                             {(
-                              tripData.stats.totalDistance /
-                              tripData.stats.totalTrips
+                              tripData.stats.tripsWithDistance > 0
+                                ? tripData.stats.totalDistance /
+                                  tripData.stats.tripsWithDistance
+                                : 0
                             ).toFixed(2)}{" "}
                             mi
                           </span>
