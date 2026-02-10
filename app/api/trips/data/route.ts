@@ -7,34 +7,44 @@ export async function GET() {
     const q1Url = `${baseUrl}/indego-trips-2025-q1.csv`;
     const q2Url = `${baseUrl}/indego-trips-2025-q2.csv`;
     const q3Url = `${baseUrl}/indego-trips-2025-q3.csv`;
+    const q4Url = `${baseUrl}/indego-trips-2025-q4.csv`;
 
-    const [q1Response, q2Response, q3Response] = await Promise.all([
+    const [q1Response, q2Response, q3Response, q4Response] = await Promise.all([
       fetch(q1Url),
       fetch(q2Url),
       fetch(q3Url),
+      fetch(q4Url),
     ]);
 
-    if (!q1Response.ok || !q2Response.ok || !q3Response.ok) {
+    if (
+      !q1Response.ok ||
+      !q2Response.ok ||
+      !q3Response.ok ||
+      !q4Response.ok
+    ) {
       throw new Error("Failed to fetch CSV files from blob storage");
     }
 
-    const [q1Data, q2Data, q3Data] = await Promise.all([
+    const [q1Data, q2Data, q3Data, q4Data] = await Promise.all([
       q1Response.text(),
       q2Response.text(),
       q3Response.text(),
+      q4Response.text(),
     ]);
 
     // Get headers from Q1 file (first line)
     const q1Lines = q1Data.split("\n");
     const q2Lines = q2Data.split("\n");
     const q3Lines = q3Data.split("\n");
+    const q4Lines = q4Data.split("\n");
 
-    // Combine: Q1 headers + Q1 data + Q2 data + Q3 data (skip Q2 and Q3 headers)
+    // Combine: Q1 headers + all quarters data (skip headers for Q2-Q4)
     const combinedData = [
       q1Lines[0], // headers
       ...q1Lines.slice(1), // Q1 data
       ...q2Lines.slice(1), // Q2 data (skip headers)
       ...q3Lines.slice(1), // Q3 data (skip headers)
+      ...q4Lines.slice(1), // Q4 data (skip headers)
     ].join("\n");
 
     return new NextResponse(combinedData, {
