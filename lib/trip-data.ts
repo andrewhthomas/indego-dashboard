@@ -1,4 +1,5 @@
 import Papa from "papaparse";
+import { BLOB_BASE_URL } from "./constants";
 
 export interface TripRecord {
   trip_id: string;
@@ -79,8 +80,6 @@ function calculateDistance(
   return R * c;
 }
 
-const BLOB_BASE_URL =
-  "https://oilg24vboskpv84u.public.blob.vercel-storage.com";
 const QUARTER_FILES = [
   "indego-trips-2025-q1.csv",
   "indego-trips-2025-q2.csv",

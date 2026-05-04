@@ -65,3 +65,17 @@ logs
 *.tmp
 .temp/
 tmp/
+scripts/mp4-gate/venv/
+scripts/mp4-gate/*.mp4
+scripts/mp4-gate/data/
+
+# Generated at `npm run fetch-tiles` (also via prebuild hook). ~15MB.
+public/philly.pmtiles
+
+# Generated at `npm run preprocess-trips` (also via prebuild hook). ~38MB.
+public/trips/
+
+# Generated at `npm run route-pairs` — slow (~50 min for 2000 pairs against
+# OpenRouteService), so NOT auto-run on build. Regenerate manually when the
+# station set or trip data changes significantly.
+public/routes.json
