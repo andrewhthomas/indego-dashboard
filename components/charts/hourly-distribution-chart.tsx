@@ -18,7 +18,7 @@ interface HourlyDistributionChartProps {
 const chartConfig = {
   trips: {
     label: "Trips",
-    color: "hsl(var(--primary))",
+    color: "var(--color-chart-1)",
   },
 } satisfies ChartConfig;
 

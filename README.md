@@ -10,7 +10,7 @@ A Next.js dashboard for visualizing Philadelphia's Indego bike share data.
 - **Station search and filtering** by name or address
 - **Detailed station view** showing individual bike information
 - **System-wide statistics** with live availability metrics
-- **Historical trip analysis** with 365K+ Q2 2025 trips
+- **Historical trip analysis** with Q1–Q4 2025 trip data
 - **Trip analytics dashboard** with daily/hourly patterns
 - **Trip insights and trends** on main dashboard
 - **Dark mode support** with system preference detection
@@ -82,7 +82,7 @@ Key dark mode features:
 This dashboard uses multiple data sources:
 
 - **BTS Status API**: `https://bts-status.bicycletransit.workers.dev/phl` (real-time station status)
-- **Trip Data CSV**: Indego Q2 2025 trip records (365,761 trips) stored locally
+- **Trip Data CSV**: Indego Q1–Q4 2025 trip records stored on Vercel Blob Storage
 - **Live Updates**: Station data refreshes every 30 seconds
 - **Historical Analysis**: Trip patterns, usage trends, and bike type distribution
 
@@ -100,6 +100,8 @@ The app is configured for deployment on Vercel:
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check formatting
 
 ## License
 
