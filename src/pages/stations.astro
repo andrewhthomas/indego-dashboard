@@ -1,0 +1,8 @@
+---
+import DashboardLayout from "@/layouts/DashboardLayout.astro";
+import { StationsView } from "@/components/pages/stations-view";
+---
+
+<DashboardLayout title="Station Map">
+  <StationsView client:load />
+</DashboardLayout>

@@ -1,0 +1,4 @@
+# Living-map data (living-map-v1 branch) is not used by this build.
+/philly.pmtiles
+/routes.json
+/trips/*.json

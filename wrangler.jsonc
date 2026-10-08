@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "indego-dashboard",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+  },
+  "observability": { "enabled": true },
+  "r2_buckets": [
+    // Quarterly trip CSVs, served by src/pages/api/trips/[file].ts
+    { "binding": "TRIPS_BUCKET", "bucket_name": "indego-trips" },
+  ],
+}

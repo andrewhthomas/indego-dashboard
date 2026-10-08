@@ -1,0 +1,43 @@
+---
+import DashboardLayout from "@/layouts/DashboardLayout.astro";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { DashboardStatsEnhanced } from "@/components/dashboard-stats-enhanced";
+import { TripInsightsCard } from "@/components/trip-insights-card";
+---
+
+<DashboardLayout>
+  <div class="space-y-6">
+    <div>
+      <h2 class="text-3xl font-bold tracking-tight">Overview</h2>
+      <p class="text-muted-foreground">
+        Philadelphia bike share system analytics and insights
+      </p>
+    </div>
+
+    <DashboardStatsEnhanced client:load />
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <Card>
+        <CardHeader>
+          <CardTitle>Real-time System Status</CardTitle>
+          <CardDescription>
+            Current bike availability and distribution across the system
+          </CardDescription>
+        </CardHeader>
+        <CardContent
+          className="h-[300px] flex items-center justify-center text-muted-foreground"
+        >
+          Live system analytics will be displayed here
+        </CardContent>
+      </Card>
+
+      <TripInsightsCard client:load />
+    </div>
+  </div>
+</DashboardLayout>
