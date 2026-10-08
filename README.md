@@ -10,7 +10,7 @@ An Astro dashboard for visualizing Philadelphia's Indego bike share data.
 - **Station search and filtering** by name or address
 - **Detailed station view** showing individual bike information
 - **System-wide statistics** with live availability metrics
-- **Historical trip analysis** with quarterly trip data (Q1 2025 through Q2 2026)
+- **Historical trip analysis** of every trip since 2016, filterable by year and month
 - **Trip analytics dashboard** with daily/hourly patterns
 - **Trip insights and trends** on main dashboard
 - **Dark mode support** with system preference detection
@@ -27,8 +27,8 @@ An Astro dashboard for visualizing Philadelphia's Indego bike share data.
 - **Theme**: Dark/Light mode via a small theme hook (`src/lib/theme.ts`)
 - **Charts**: Recharts
 - **Maps**: Leaflet + React-Leaflet, OpenFreeMap vector basemap via MapLibre GL
-- **Data Processing**: Papa Parse (CSV parsing)
-- **Deployment**: Cloudflare Workers (static assets + R2)
+- **Data Processing**: precomputed at build time with Papa Parse (`scripts/build-trip-data.mjs`)
+- **Deployment**: Cloudflare Workers (static assets)
 
 ## Getting Started
 
@@ -82,61 +82,46 @@ Key dark mode features:
 This dashboard uses multiple data sources:
 
 - **BTS Status API**: `https://bts-status.bicycletransit.workers.dev/phl` (real-time station status)
-- **Trip Data CSV**: Indego quarterly trip records (Q1 2025 through Q2 2026) stored in the `indego-trips` Cloudflare R2 bucket, served by the Worker at `/api/trips/<file>.csv`
+- **Trip Data**: Indego quarterly trip records since Q1 2016, precomputed into static JSON under `public/data/trips/`
 - **Live Updates**: Station data refreshes every 30 seconds
 - **Historical Analysis**: Trip patterns, usage trends, and bike type distribution
 
 ## Deployment
 
-The app deploys to Cloudflare Workers. Pages are prerendered and served as
-static assets; the only on-demand route is `/api/trips/[file]`, which streams
-the quarterly trip CSVs from R2 (binding `TRIPS_BUCKET` in `wrangler.jsonc`).
+The app deploys to Cloudflare Workers as static assets: every page is
+prerendered and all trip numbers are precomputed JSON, so there is no server
+code and no database.
 
 ```bash
 npx wrangler login        # once
 npm run deploy            # astro check + astro build + wrangler deploy
 ```
 
-### Trip data (R2)
+## Trip data
 
-One-time setup, and again whenever a quarter is added (also add the file name
-to `QUARTER_FILES` in `src/lib/trip-data.ts`):
+The browser never downloads raw trip CSVs. `npm run build-data` reads Indego's
+quarterly trip files and writes small aggregate files that are committed:
 
-```bash
-npx wrangler r2 bucket create indego-trips
-gzip -9 -k indego-trips-2025-q1.csv
-npx wrangler r2 object put indego-trips/indego-trips-2025-q1.csv \
-  --remote --content-type text/csv --content-encoding gzip \
-  --file ./indego-trips-2025-q1.csv.gz
-```
+- `public/data/trips/all.json`, `YYYY.json`, `YYYY-MM.json`: the stats behind
+  `/trips` for the whole history, each year and each month
+- `src/data/trip-index.json`: which periods exist (drives the period filter)
+- `src/data/trip-patterns.json`: `/patterns` and the home page trip insights
 
-The CSVs are stored gzipped (about 6x smaller on the wire); the object key
-keeps the plain `.csv` name and the Worker passes the gzip bytes through.
+To add a quarter:
 
-For local development, seed the local R2 simulator in `.wrangler/state` with
-the plain, uncompressed CSV (`--local`, no `--content-encoding`). The local
-simulator truncates gzip-encoded objects, so only production gets the `.gz`:
+1. Download the CSV from https://www.rideindego.com/about/data/ into
+   `data/trips/` (gitignored). File names do not matter.
+2. Run `npm run build-data`, then commit the changed JSON and deploy.
 
-```bash
-npx wrangler r2 object put indego-trips/indego-trips-2025-q1.csv \
-  --local --content-type text/csv --file ./indego-trips-2025-q1.csv
-```
-
-### Usage patterns data
-
-`/patterns` and the home page trip insights read `src/data/trip-patterns.json`,
-a small set of aggregates precomputed from the trip CSVs and committed to the
-repo. Regenerate it after adding a quarter (and add the file name to
-`QUARTER_FILES` in `scripts/build-trip-patterns.mjs`):
-
-```bash
-npm run build-patterns                  # reads the CSVs from the deployed site
-npm run build-patterns -- --dir=./csv   # or from local files
-```
+The script handles the format changes across the years (seconds vs minutes,
+`start_station_id` vs `start_station`, two date formats, missing `bike_type`
+before Q3 2018, renamed pass types) and drops trips repeated across adjacent
+quarterly files. It needs all the CSVs present, since every output is rebuilt
+from scratch.
 
 Station names come from `src/data/station-names.json`, built from Indego's
 station table CSV (it includes retired stations that still appear in trips).
-Refresh it before `build-patterns` when Indego publishes a new table:
+Refresh it before `build-data` when Indego publishes a new table:
 
 ```bash
 npm run build-stations -- --file=./indego-stations-2026-07-15.csv
@@ -150,8 +135,7 @@ npm run build-stations -- --file=./indego-stations-2026-07-15.csv
 - `npm run check` - Run `astro check` (TypeScript + Astro diagnostics)
 - `npm run deploy` - Build and deploy to Cloudflare Workers
 - `npm run build-stations` - Regenerate `src/data/station-names.json` from the station table CSV
-- `npm run build-patterns` - Regenerate `src/data/trip-patterns.json` from the trip CSVs
-- `npm run cf-typegen` - Regenerate binding types after editing `wrangler.jsonc`
+- `npm run build-data` - Regenerate all precomputed trip data from `data/trips/*.csv`
 - `npm run format` - Format code with Prettier
 - `npm run format:check` - Check formatting
 

@@ -1,19 +1,21 @@
 # Troubleshooting
 
-## Trip analytics shows "Failed to fetch indego-trips-2025-qN.csv"
+## Trip analytics shows "No trip data for ..."
 
-The trip CSVs are read from the `indego-trips` R2 bucket through
-`/api/trips/<file>.csv`.
+`/trips` reads one small JSON file per period from `public/data/trips/`. If a
+period is missing, the data has not been rebuilt since that quarter was added:
+run `npm run build-data` (see "Trip data" in the README) and redeploy.
 
-- **Local dev / preview:** the local R2 simulator starts empty. Seed it once
-  (see "Trip data (R2)" in the README) using `--local`.
-- **Production:** confirm the objects exist with
-  `npx wrangler r2 object get indego-trips/indego-trips-2025-q1.csv --remote --pipe | head -2`.
+## `npm run build-data` says "No trip CSVs found"
 
-## Stale build or type errors after changing `wrangler.jsonc`
+The script reads `data/trips/*.csv`, which is gitignored. Download the
+quarterly files from https://www.rideindego.com/about/data/ into that folder,
+or pass `--dir=/path/to/csvs`. Every quarter must be present; outputs are
+rebuilt from scratch each run.
+
+## Stale build output
 
 ```bash
-npm run cf-typegen
 rm -rf dist .astro node_modules/.vite
 npm run build
 ```
@@ -29,8 +31,3 @@ with `npx astro preview stop`.
 Leaflet touches `window` at import time. Components that import `leaflet` or
 `react-leaflet` must be loaded through `clientOnly()` from
 `src/lib/client-only.tsx` so they are skipped during prerendering.
-
-## Slow trip analytics
-
-The browser downloads and parses all four quarterly CSVs (about 180 MB before
-compression). This needs a modern browser and a few GB of free memory.
