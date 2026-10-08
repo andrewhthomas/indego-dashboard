@@ -156,7 +156,8 @@ export function PatternsView() {
 
   const monthlyData = monthly.map((m) => ({
     ...m,
-    label: formatIsoDate(`${m.month}-01`, { month: "short" }),
+    // "Jan 25": the data spans more than one year
+    label: formatIsoDate(`${m.month}-01`, { month: "short", year: "2-digit" }),
   }));
 
   const riderRows = [
@@ -189,7 +190,7 @@ export function PatternsView() {
       <PatternCard
         title="The week at a glance"
         metric="avg trips started, by day and hour"
-        note="Each cell is one hour of one weekday, averaged over the year. Darker means more trips. Weekdays show two commute peaks; weekends build to a single afternoon hump."
+        note="Each cell is one hour of one weekday, averaged over the whole period. Darker means more trips. Weekdays show two commute peaks; weekends build to a single afternoon hump."
       >
         <HourHeatmap
           unit="trips"
@@ -328,7 +329,7 @@ export function PatternsView() {
       <PatternCard
         title="Busiest stations"
         metric="trips starting or ending there, per day"
-        note="The fifteen stations that handle the most trips, counting both pickups and returns, averaged over every day of the year."
+        note="The fifteen stations that handle the most trips, counting both pickups and returns, averaged over every day in the data."
       >
         <ChartContainer
           config={stationConfig}
@@ -578,9 +579,10 @@ export function PatternsView() {
         {formatIsoDate(meta.busiestDay.date, {
           month: "long",
           day: "numeric",
+          year: "numeric",
         })}{" "}
         with {meta.busiestDay.trips.toLocaleString()} trips. Source: Indego
-        quarterly trip data for 2025.
+        quarterly trip data.
       </p>
     </div>
   );

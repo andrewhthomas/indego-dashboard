@@ -1,7 +1,7 @@
 // Precompute the aggregates behind /patterns and the home page trip insights.
 //
 //   npm run build-patterns                    # reads the CSVs from the deployed site
-//   npm run build-patterns -- --dir=./csv     # reads local indego-trips-2025-q*.csv
+//   npm run build-patterns -- --dir=./csv     # reads local indego-trips-YYYY-q*.csv
 //   npm run build-patterns -- --base=http://localhost:4321/api/trips
 //
 // Writes src/data/trip-patterns.json, which is committed. Re-run when a quarter
@@ -17,6 +17,8 @@ const QUARTER_FILES = [
   "indego-trips-2025-q2.csv",
   "indego-trips-2025-q3.csv",
   "indego-trips-2025-q4.csv",
+  "indego-trips-2026-q1.csv",
+  "indego-trips-2026-q2.csv",
 ];
 const DEFAULT_BASE =
   "https://indego-dashboard.andrewhthomas.workers.dev/api/trips";
@@ -24,6 +26,11 @@ const STATION_FEED = "https://bts-status.bicycletransit.workers.dev/phl";
 const OUT_FILE = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
   "../src/data/trip-patterns.json",
+);
+
+const STATION_NAMES_FILE = path.join(
+  path.dirname(OUT_FILE),
+  "station-names.json",
 );
 
 const AM_RUSH_HOURS = [7, 8]; // 7:00-8:59
@@ -45,17 +52,23 @@ async function readCsv(file) {
   return res.text();
 }
 
+// Roster first (it includes retired stations), then the live feed for any
+// station too new to be in the roster.
 async function stationNames() {
+  const names = new Map(
+    Object.entries(JSON.parse(await readFile(STATION_NAMES_FILE, "utf8"))),
+  );
   try {
     const res = await fetch(STATION_FEED);
     const data = await res.json();
-    return new Map(
-      data.features.map((f) => [String(f.properties.id), f.properties.name]),
-    );
+    for (const f of data.features) {
+      const id = String(f.properties.id);
+      if (!names.has(id)) names.set(id, f.properties.name);
+    }
   } catch (error) {
-    console.warn("Could not load station names:", error.message);
-    return new Map();
+    console.warn("Could not load live station names:", error.message);
   }
+  return names;
 }
 
 // "7/12/2025 15:45" -> { date: "2025-07-12", month: "2025-07", hour: 15, dow: 0..6 (Mon=0) }

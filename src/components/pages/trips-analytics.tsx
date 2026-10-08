@@ -7,7 +7,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { loadTripData, type ProcessedTripData } from "@/lib/trip-data";
+import {
+  DATA_RANGE_LABEL,
+  loadTripData,
+  type ProcessedTripData,
+} from "@/lib/trip-data";
 import { TripStatsOverview } from "@/components/trip-stats-overview";
 import { DailyTripChart } from "@/components/charts/daily-trip-chart";
 import { HourlyDistributionChart } from "@/components/charts/hourly-distribution-chart";
@@ -48,7 +52,7 @@ export function TripsAnalytics() {
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Trip Analytics</h2>
           <p className="text-muted-foreground">
-            Historical trip data analysis for Q2 2025
+            Historical trip data analysis for {DATA_RANGE_LABEL}
           </p>
         </div>
         <Card>
@@ -66,20 +70,22 @@ export function TripsAnalytics() {
     );
   }
 
-  const getFilterDescription = () => {
-    if (selectedMonth === "all") {
-      return `Comprehensive analysis of ${tripData?.stats.totalTrips.toLocaleString() || "loading"} trips from 2025`;
-    }
+  const getPeriodLabel = () => {
+    if (selectedMonth === "all") return DATA_RANGE_LABEL;
 
     const [year, monthNum] = selectedMonth.split("-");
-    const monthName = new Date(
-      parseInt(year),
-      parseInt(monthNum) - 1,
-    ).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-    });
-    return `Analysis of ${tripData?.stats.totalTrips.toLocaleString() || "loading"} trips from ${monthName}`;
+    return new Date(parseInt(year), parseInt(monthNum) - 1).toLocaleDateString(
+      "en-US",
+      { year: "numeric", month: "long" },
+    );
+  };
+  const periodLabel = getPeriodLabel();
+
+  const getFilterDescription = () => {
+    const trips = tripData?.stats.totalTrips.toLocaleString() || "loading";
+    return selectedMonth === "all"
+      ? `Comprehensive analysis of ${trips} trips, ${periodLabel}`
+      : `Analysis of ${trips} trips from ${periodLabel}`;
   };
 
   return (
@@ -92,7 +98,11 @@ export function TripsAnalytics() {
         <MonthFilter value={selectedMonth} onValueChange={setSelectedMonth} />
       </div>
 
-      <TripStatsOverview stats={tripData?.stats || null} loading={loading} />
+      <TripStatsOverview
+        stats={tripData?.stats || null}
+        loading={loading}
+        periodLabel={periodLabel}
+      />
 
       {/* Show message when no data is available for selected month */}
       {!loading &&

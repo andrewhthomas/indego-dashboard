@@ -2,22 +2,26 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type TripStats } from "@/lib/trip-data";
 import { Bike, Clock, Route, TrendingUp, Calendar, Users } from "lucide-react";
 import { PlaceholderText } from "@/components/ui/placeholder-text";
+import { stationName } from "@/lib/station-names";
 
 interface TripStatsOverviewProps {
   stats: TripStats | null;
   loading?: boolean;
+  /** The period the stats cover, e.g. "Jan 2025 to Jun 2026" or "July 2025" */
+  periodLabel: string;
 }
 
 export function TripStatsOverview({
   stats,
   loading = false,
+  periodLabel,
 }: TripStatsOverviewProps) {
   const statCards = [
     {
       title: "Total Trips",
       value: loading ? "123,456" : (stats?.totalTrips.toLocaleString() ?? "--"),
       icon: Bike,
-      description: loading ? "Loading data..." : "2025",
+      description: loading ? "Loading data..." : periodLabel,
       color: "text-blue-600",
     },
     {
@@ -103,7 +107,9 @@ export function TripStatsOverview({
                 <PlaceholderText loading={loading}>
                   {loading
                     ? "Station 3025"
-                    : `Station ${stats?.mostPopularStartStation || "--"}`}
+                    : stats?.mostPopularStartStation
+                      ? stationName(stats.mostPopularStartStation)
+                      : "--"}
                 </PlaceholderText>
               </span>
             </div>
@@ -115,7 +121,9 @@ export function TripStatsOverview({
                 <PlaceholderText loading={loading}>
                   {loading
                     ? "Station 3045"
-                    : `Station ${stats?.mostPopularEndStation || "--"}`}
+                    : stats?.mostPopularEndStation
+                      ? stationName(stats.mostPopularEndStation)
+                      : "--"}
                 </PlaceholderText>
               </span>
             </div>

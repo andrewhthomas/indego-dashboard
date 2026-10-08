@@ -11,7 +11,8 @@
     "check": "astro check",
     "deploy": "npm run build && wrangler deploy",
     "cf-typegen": "wrangler types",
-    "build-patterns": "node scripts/build-trip-patterns.mjs"
+    "build-patterns": "node scripts/build-trip-patterns.mjs",
+    "build-stations": "node scripts/build-station-names.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.3.4",

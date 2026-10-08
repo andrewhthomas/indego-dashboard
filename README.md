@@ -10,7 +10,7 @@ An Astro dashboard for visualizing Philadelphia's Indego bike share data.
 - **Station search and filtering** by name or address
 - **Detailed station view** showing individual bike information
 - **System-wide statistics** with live availability metrics
-- **Historical trip analysis** with Q1–Q4 2025 trip data
+- **Historical trip analysis** with quarterly trip data (Q1 2025 through Q2 2026)
 - **Trip analytics dashboard** with daily/hourly patterns
 - **Trip insights and trends** on main dashboard
 - **Dark mode support** with system preference detection
@@ -82,7 +82,7 @@ Key dark mode features:
 This dashboard uses multiple data sources:
 
 - **BTS Status API**: `https://bts-status.bicycletransit.workers.dev/phl` (real-time station status)
-- **Trip Data CSV**: Indego Q1–Q4 2025 trip records stored in the `indego-trips` Cloudflare R2 bucket, served by the Worker at `/api/trips/<file>.csv`
+- **Trip Data CSV**: Indego quarterly trip records (Q1 2025 through Q2 2026) stored in the `indego-trips` Cloudflare R2 bucket, served by the Worker at `/api/trips/<file>.csv`
 - **Live Updates**: Station data refreshes every 30 seconds
 - **Historical Analysis**: Trip patterns, usage trends, and bike type distribution
 
@@ -113,8 +113,14 @@ npx wrangler r2 object put indego-trips/indego-trips-2025-q1.csv \
 The CSVs are stored gzipped (about 6x smaller on the wire); the object key
 keeps the plain `.csv` name and the Worker passes the gzip bytes through.
 
-For local development, run the same `r2 object put` with `--local` instead of
-`--remote` to seed the local R2 simulator in `.wrangler/state`.
+For local development, seed the local R2 simulator in `.wrangler/state` with
+the plain, uncompressed CSV (`--local`, no `--content-encoding`). The local
+simulator truncates gzip-encoded objects, so only production gets the `.gz`:
+
+```bash
+npx wrangler r2 object put indego-trips/indego-trips-2025-q1.csv \
+  --local --content-type text/csv --file ./indego-trips-2025-q1.csv
+```
 
 ### Usage patterns data
 
@@ -128,6 +134,14 @@ npm run build-patterns                  # reads the CSVs from the deployed site
 npm run build-patterns -- --dir=./csv   # or from local files
 ```
 
+Station names come from `src/data/station-names.json`, built from Indego's
+station table CSV (it includes retired stations that still appear in trips).
+Refresh it before `build-patterns` when Indego publishes a new table:
+
+```bash
+npm run build-stations -- --file=./indego-stations-2026-07-15.csv
+```
+
 ## Development
 
 - `npm run dev` - Start development server (runs in workerd)
@@ -135,6 +149,7 @@ npm run build-patterns -- --dir=./csv   # or from local files
 - `npm run preview` - Serve the production build locally in workerd
 - `npm run check` - Run `astro check` (TypeScript + Astro diagnostics)
 - `npm run deploy` - Build and deploy to Cloudflare Workers
+- `npm run build-stations` - Regenerate `src/data/station-names.json` from the station table CSV
 - `npm run build-patterns` - Regenerate `src/data/trip-patterns.json` from the trip CSVs
 - `npm run cf-typegen` - Regenerate binding types after editing `wrangler.jsonc`
 - `npm run format` - Format code with Prettier

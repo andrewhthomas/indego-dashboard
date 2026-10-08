@@ -10,14 +10,16 @@ import { TrendingUp, Clock, Route } from "lucide-react";
 
 export function TripInsightsCard() {
   const { meta } = tripPatterns;
-  const year = meta.firstDate.slice(0, 4);
+  const monthYear = { month: "short", year: "numeric" } as const;
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Trip Insights</CardTitle>
         <CardDescription>
-          Analysis of {meta.totalTrips.toLocaleString()} trips from {year}
+          Analysis of {meta.totalTrips.toLocaleString()} trips,{" "}
+          {formatIsoDate(meta.firstDate, monthYear)} to{" "}
+          {formatIsoDate(meta.lastDate, monthYear)}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -55,8 +57,12 @@ export function TripInsightsCard() {
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Most Active Day:</span>
             <span className="font-mono tabular-nums font-medium">
-              {formatIsoDate(meta.busiestDay.date)} (
-              {meta.busiestDay.trips.toLocaleString()} trips)
+              {formatIsoDate(meta.busiestDay.date, {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}{" "}
+              ({meta.busiestDay.trips.toLocaleString()} trips)
             </span>
           </div>
         </div>

@@ -86,7 +86,30 @@ export const QUARTER_FILES = [
   "indego-trips-2025-q2.csv",
   "indego-trips-2025-q3.csv",
   "indego-trips-2025-q4.csv",
+  "indego-trips-2026-q1.csv",
+  "indego-trips-2026-q2.csv",
 ];
+
+// Every month covered by QUARTER_FILES, oldest first
+const DATA_MONTHS = QUARTER_FILES.flatMap((file) => {
+  const match = /(\d{4})-q([1-4])/.exec(file);
+  if (!match) return [];
+  const year = Number(match[1]);
+  const firstMonth = (Number(match[2]) - 1) * 3;
+  return [0, 1, 2].map((offset) => ({ year, month: firstMonth + offset }));
+});
+
+const monthLabel = (
+  { year, month }: { year: number; month: number },
+  format: "long" | "short",
+) =>
+  new Date(year, month, 1).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: format,
+  });
+
+/** e.g. "Jan 2025 to Jun 2026" */
+export const DATA_RANGE_LABEL = `${monthLabel(DATA_MONTHS[0], "short")} to ${monthLabel(DATA_MONTHS[DATA_MONTHS.length - 1], "short")}`;
 
 function parseCsv(csvText: string): Promise<TripRecord[]> {
   return new Promise((resolve, reject) => {
@@ -149,21 +172,14 @@ export async function loadTripData(
   }
 }
 
-// Helper function to get all months for 2025
+// Month filter options for every month in the loaded data
 export async function getAvailableMonths(): Promise<
   Array<{ value: string; label: string }>
 > {
-  // Generate all months for 2025
-  const months = [];
-  for (let i = 0; i < 12; i++) {
-    const date = new Date(2025, i, 1);
-    const monthKey = `2025-${String(i + 1).padStart(2, "0")}`;
-    const monthName = date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-    });
-    months.push({ value: monthKey, label: monthName });
-  }
+  const months = DATA_MONTHS.map((m) => ({
+    value: `${m.year}-${String(m.month + 1).padStart(2, "0")}`,
+    label: monthLabel(m, "long"),
+  }));
 
   return [{ value: "all", label: "All Months" }, ...months];
 }
