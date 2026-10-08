@@ -1,4 +1,5 @@
 import { fetchStationStatus } from "./api";
+import { hasStationName, stationName } from "./station-names";
 
 export interface StationMapping {
   [stationId: string]: string;
@@ -31,7 +32,7 @@ export async function getStationMapping(): Promise<StationMapping> {
   } catch (error) {
     console.error("Error fetching station mapping:", error);
 
-    // Return empty mapping on error, falling back to station IDs
+    // Return empty mapping on error, falling back to the station roster
     return {};
   }
 }
@@ -40,5 +41,9 @@ export function getStationName(
   stationId: string,
   mapping: StationMapping,
 ): string {
-  return mapping[stationId] || stationId;
+  // Trip data is historical, so prefer the roster: a few station IDs have
+  // since been reused for a different location in the live feed. Fall back to
+  // live names for stations newer than the roster.
+  if (hasStationName(stationId)) return stationName(stationId);
+  return mapping[stationId] || stationName(stationId);
 }

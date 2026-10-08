@@ -9,6 +9,7 @@ import {
 import { type RouteData } from "@/lib/trip-data";
 import { Skeleton } from "@/components/ui/skeleton";
 import { clientOnly } from "@/lib/client-only";
+import { stationName } from "@/lib/station-names";
 import "leaflet/dist/leaflet.css";
 
 // Load map components client-side only to avoid SSR issues
@@ -174,7 +175,7 @@ export function RouteHeatmap({ routes, loading = false }: RouteHeatmapProps) {
                       const layer = e.target;
                       layer
                         .bindTooltip(
-                          `Station ${route.startStation} → Station ${route.endStation}<br/>
+                          `${stationName(route.startStation)} → ${stationName(route.endStation)}<br/>
                          ${route.count} trips`,
                           { permanent: false, direction: "top" },
                         )
