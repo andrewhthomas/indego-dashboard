@@ -1,6 +1,17 @@
 import { useEffect } from "react";
-import { TileLayer, useMap } from "react-leaflet";
+import { useMap } from "react-leaflet";
+import { maplibreGL } from "@maplibre/maplibre-gl-leaflet";
+import { setWorkerUrl } from "maplibre-gl";
+import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
+import "maplibre-gl/dist/maplibre-gl.css";
 import { useTheme } from "@/lib/theme";
+
+// MapLibre GL v6 is ESM-only and needs its worker URL from the bundler.
+setWorkerUrl(workerUrl);
+
+// OpenFreeMap vector styles (free, no API key)
+const LIGHT_STYLE_URL = "https://tiles.openfreemap.org/styles/positron";
+const DARK_STYLE_URL = "https://tiles.openfreemap.org/styles/dark";
 
 export function ThemeAwareTileLayer() {
   const { resolvedTheme } = useTheme();
@@ -9,31 +20,17 @@ export function ThemeAwareTileLayer() {
   // Determine theme type
   const isDark = resolvedTheme === "dark";
 
-  // Tile layer URLs
-  const lightTileUrl =
-    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
-  const darkTileUrl =
-    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
-
-  // Select appropriate tile URL
-  const tileUrl = isDark ? darkTileUrl : lightTileUrl;
-  const tileAttribution =
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
-
-  // Force map to refresh when theme changes
+  // Recreate the basemap layer when the theme changes. The layer adds the
+  // style's own attribution to the Leaflet control.
   useEffect(() => {
-    if (map) {
-      setTimeout(() => {
-        map.invalidateSize();
-      }, 100);
-    }
-  }, [map, resolvedTheme]);
+    const layer = maplibreGL({
+      style: isDark ? DARK_STYLE_URL : LIGHT_STYLE_URL,
+    }).addTo(map);
 
-  return (
-    <TileLayer
-      key={resolvedTheme || "system"} // Force re-render when theme changes
-      attribution={tileAttribution}
-      url={tileUrl}
-    />
-  );
+    return () => {
+      map.removeLayer(layer);
+    };
+  }, [map, isDark]);
+
+  return null;
 }

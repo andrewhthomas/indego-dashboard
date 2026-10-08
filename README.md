@@ -26,7 +26,7 @@ An Astro dashboard for visualizing Philadelphia's Indego bike share data.
 - **UI Components**: shadcn/ui
 - **Theme**: Dark/Light mode via a small theme hook (`src/lib/theme.ts`)
 - **Charts**: Recharts
-- **Maps**: Leaflet + React-Leaflet
+- **Maps**: Leaflet + React-Leaflet, OpenFreeMap vector basemap via MapLibre GL
 - **Data Processing**: Papa Parse (CSV parsing)
 - **Deployment**: Cloudflare Workers (static assets + R2)
 
@@ -66,14 +66,14 @@ npm run dev
 
 The dashboard includes a theme toggle in the header that allows switching between:
 
-- **Light mode**: Traditional light theme with standard OpenStreetMap tiles
-- **Dark mode**: Dark theme with dark map tiles for low-light environments
+- **Light mode**: Traditional light theme with a light map style
+- **Dark mode**: Dark theme with a dark map style for low-light environments
 - **System**: Automatically follows your device's theme preference
 
 Key dark mode features:
 
 - All UI components automatically switch themes
-- Maps use dark tiles from CartoDB when in dark mode
+- Maps use the OpenFreeMap dark style when in dark mode
 - Theme preference is saved and persists across sessions
 - Smooth transitions between light and dark themes
 
