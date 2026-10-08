@@ -66,28 +66,30 @@ export function StationDetailDialog({
           <div className="grid grid-cols-4 gap-4">
             <div className="text-center p-3 border rounded-lg">
               <Bike className="h-5 w-5 mx-auto mb-1" />
-              <div className="text-2xl font-bold">
+              <div className="font-mono text-2xl font-bold">
                 {station.classicBikesAvailable}
               </div>
               <div className="text-xs text-muted-foreground">Classic</div>
             </div>
             <div className="text-center p-3 border rounded-lg">
               <Zap className="h-5 w-5 mx-auto mb-1 text-yellow-600" />
-              <div className="text-2xl font-bold">
+              <div className="font-mono text-2xl font-bold">
                 {station.electricBikesAvailable}
               </div>
               <div className="text-xs text-muted-foreground">Electric</div>
             </div>
             <div className="text-center p-3 border rounded-lg">
               <Brain className="h-5 w-5 mx-auto mb-1 text-indigo-600" />
-              <div className="text-2xl font-bold">
+              <div className="font-mono text-2xl font-bold">
                 {station.smartBikesAvailable}
               </div>
               <div className="text-xs text-muted-foreground">Smart</div>
             </div>
             <div className="text-center p-3 border rounded-lg">
               <Clock className="h-5 w-5 mx-auto mb-1 text-green-600" />
-              <div className="text-2xl font-bold">{station.docksAvailable}</div>
+              <div className="font-mono text-2xl font-bold">
+                {station.docksAvailable}
+              </div>
               <div className="text-xs text-muted-foreground">Docks</div>
             </div>
           </div>

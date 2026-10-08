@@ -70,8 +70,11 @@ function StationList({
                 className="flex items-center justify-between gap-4 py-2"
               >
                 <span className="truncate font-medium">{station.name}</span>
-                <span className="shrink-0 tabular-nums text-muted-foreground">
-                  {station.totalDocks} docks
+                <span className="shrink-0 text-muted-foreground">
+                  <span className="font-mono tabular-nums">
+                    {station.totalDocks}
+                  </span>{" "}
+                  docks
                 </span>
               </li>
             ))}
@@ -200,7 +203,7 @@ export function LiveOverview() {
               <stat.icon className={`h-4 w-4 ${stat.color}`} />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stat.value}</div>
+              <div className="font-mono text-2xl font-bold">{stat.value}</div>
               <p className="text-xs text-muted-foreground">
                 {stat.description}
               </p>
@@ -227,7 +230,7 @@ export function LiveOverview() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
+              <div className="font-mono text-2xl font-bold">
                 {overview && callout.count !== undefined
                   ? `${percentOfActive(callout.count, overview)}%`
                   : "--"}
@@ -275,7 +278,7 @@ export function LiveOverview() {
                 <bike.icon className={`h-5 w-5 ${bike.color}`} />
                 <div>
                   <p className="text-sm font-medium">{bike.title}</p>
-                  <p className="text-2xl font-bold">
+                  <p className="font-mono text-2xl font-bold">
                     {bike.value?.toLocaleString() ?? "--"}
                   </p>
                 </div>

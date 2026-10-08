@@ -343,10 +343,10 @@ export function RoutesTable({ routes, loading = false }: RoutesTableProps) {
                             )}
                         </div>
                       </td>
-                      <td className="p-3 text-sm text-muted-foreground">
+                      <td className="p-3 font-mono tabular-nums text-sm text-muted-foreground">
                         {route.distance.toFixed(2)} mi
                       </td>
-                      <td className="p-3 font-medium">
+                      <td className="p-3 font-mono tabular-nums font-medium">
                         {route.count.toLocaleString()}
                       </td>
                       <td className="p-3">

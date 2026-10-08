@@ -5,6 +5,8 @@
 
 @theme {
   --font-sans: "Inter Variable", system-ui, sans-serif;
+  /* Numeric values: stat tiles, table figures, chart tooltips */
+  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
 
   --color-background: hsl(0 0% 100%);
   --color-foreground: hsl(222.2 84% 4.9%);

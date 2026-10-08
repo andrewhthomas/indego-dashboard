@@ -63,7 +63,7 @@ export function TripStatsOverview({
               <stat.icon className={`h-4 w-4 ${stat.color}`} />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
+              <div className="font-mono text-2xl font-bold">
                 <PlaceholderText loading={loading}>
                   {stat.value}
                 </PlaceholderText>
@@ -89,7 +89,7 @@ export function TripStatsOverview({
           <CardContent className="space-y-3">
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">Peak Hour:</span>
-              <span className="font-medium">
+              <span className="font-mono tabular-nums font-medium">
                 <PlaceholderText loading={loading}>
                   {loading ? "14:00-15:00" : stats?.peakHour || "--"}
                 </PlaceholderText>
@@ -185,10 +185,10 @@ export function TripStatsOverview({
                     >
                       <span className="text-sm">{type}</span>
                       <div className="flex items-center gap-2">
-                        <span className="font-medium">
+                        <span className="font-mono tabular-nums font-medium">
                           {count.toLocaleString()}
                         </span>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="font-mono tabular-nums text-xs text-muted-foreground">
                           ({Math.round((count / stats.totalTrips) * 100)}%)
                         </span>
                       </div>

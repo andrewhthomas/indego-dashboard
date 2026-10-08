@@ -291,7 +291,7 @@ export function TripsAnalytics() {
                     <div className="space-y-3">
                       <div className="flex justify-between">
                         <span className="text-sm">Electric Bike Trips:</span>
-                        <span className="font-medium">
+                        <span className="font-mono tabular-nums font-medium">
                           {tripData.stats.bikeTypeBreakdown.electric.toLocaleString()}
                           <span className="text-muted-foreground ml-1">
                             (
@@ -306,7 +306,7 @@ export function TripsAnalytics() {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-sm">Standard Bike Trips:</span>
-                        <span className="font-medium">
+                        <span className="font-mono tabular-nums font-medium">
                           {tripData.stats.bikeTypeBreakdown.standard.toLocaleString()}
                           <span className="text-muted-foreground ml-1">
                             (
@@ -322,7 +322,7 @@ export function TripsAnalytics() {
                       <div className="pt-2 border-t">
                         <div className="flex justify-between">
                           <span className="text-sm">Avg Trip Distance:</span>
-                          <span className="font-medium">
+                          <span className="font-mono tabular-nums font-medium">
                             {(tripData.stats.tripsWithDistance > 0
                               ? tripData.stats.totalDistance /
                                 tripData.stats.tripsWithDistance

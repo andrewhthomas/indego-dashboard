@@ -493,19 +493,19 @@ export function PatternsView() {
                   <div className="font-medium">{row.label}</div>
                   <div className="text-xs text-muted-foreground">{row.sub}</div>
                 </TableCell>
-                <TableCell className="text-right tabular-nums">
+                <TableCell className="text-right font-mono tabular-nums">
                   {Math.round((row.trips / riderTrips) * 100)}%
                 </TableCell>
-                <TableCell className="text-right tabular-nums">
+                <TableCell className="text-right font-mono tabular-nums">
                   {row.medianDuration} min
                 </TableCell>
-                <TableCell className="text-right tabular-nums">
+                <TableCell className="text-right font-mono tabular-nums">
                   {row.roundTripShare}%
                 </TableCell>
-                <TableCell className="text-right tabular-nums">
+                <TableCell className="text-right font-mono tabular-nums">
                   {row.electricShare}%
                 </TableCell>
-                <TableCell className="text-right tabular-nums">
+                <TableCell className="text-right font-mono tabular-nums">
                   {row.weekendShare}%
                 </TableCell>
               </TableRow>
@@ -528,7 +528,7 @@ export function PatternsView() {
           ).map(([label, fleet]) => (
             <div key={label} className="rounded-lg border p-4">
               <p className="text-sm font-medium">{label} bikes</p>
-              <p className="text-2xl font-bold">
+              <p className="font-mono text-2xl font-bold">
                 {fleet.tripsPerActiveDay.toFixed(1)}
               </p>
               <p className="text-xs text-muted-foreground">
@@ -552,19 +552,19 @@ export function PatternsView() {
           <TableBody>
             {bikes.top.map((bike) => (
               <TableRow key={bike.id}>
-                <TableCell className="font-medium tabular-nums">
+                <TableCell className="font-medium font-mono tabular-nums">
                   #{bike.id}
                 </TableCell>
                 <TableCell>
                   {bike.type === "electric" ? "Electric" : "Classic"}
                 </TableCell>
-                <TableCell className="text-right tabular-nums">
+                <TableCell className="text-right font-mono tabular-nums">
                   {bike.trips.toLocaleString()}
                 </TableCell>
-                <TableCell className="text-right tabular-nums">
+                <TableCell className="text-right font-mono tabular-nums">
                   {bike.activeDays}
                 </TableCell>
-                <TableCell className="text-right tabular-nums">
+                <TableCell className="text-right font-mono tabular-nums">
                   {(bike.trips / bike.activeDays).toFixed(1)}
                 </TableCell>
               </TableRow>

@@ -103,7 +103,7 @@ export function StationTable({ stations, onStationClick }: StationTableProps) {
                   <TableCell>
                     {getStatusBadge(station.kioskPublicStatus)}
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center font-mono tabular-nums">
                     <span
                       className={getAvailabilityColor(
                         station.classicBikesAvailable,
@@ -113,7 +113,7 @@ export function StationTable({ stations, onStationClick }: StationTableProps) {
                       {station.classicBikesAvailable}
                     </span>
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center font-mono tabular-nums">
                     <span
                       className={getAvailabilityColor(
                         station.electricBikesAvailable,
@@ -123,7 +123,7 @@ export function StationTable({ stations, onStationClick }: StationTableProps) {
                       {station.electricBikesAvailable}
                     </span>
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center font-mono tabular-nums">
                     <span
                       className={getAvailabilityColor(
                         station.smartBikesAvailable,
@@ -133,7 +133,7 @@ export function StationTable({ stations, onStationClick }: StationTableProps) {
                       {station.smartBikesAvailable}
                     </span>
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center font-mono tabular-nums">
                     <span
                       className={getAvailabilityColor(
                         station.docksAvailable,
