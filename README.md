@@ -116,6 +116,18 @@ keeps the plain `.csv` name and the Worker passes the gzip bytes through.
 For local development, run the same `r2 object put` with `--local` instead of
 `--remote` to seed the local R2 simulator in `.wrangler/state`.
 
+### Usage patterns data
+
+`/patterns` and the home page trip insights read `src/data/trip-patterns.json`,
+a small set of aggregates precomputed from the trip CSVs and committed to the
+repo. Regenerate it after adding a quarter (and add the file name to
+`QUARTER_FILES` in `scripts/build-trip-patterns.mjs`):
+
+```bash
+npm run build-patterns                  # reads the CSVs from the deployed site
+npm run build-patterns -- --dir=./csv   # or from local files
+```
+
 ## Development
 
 - `npm run dev` - Start development server (runs in workerd)
@@ -123,6 +135,7 @@ For local development, run the same `r2 object put` with `--local` instead of
 - `npm run preview` - Serve the production build locally in workerd
 - `npm run check` - Run `astro check` (TypeScript + Astro diagnostics)
 - `npm run deploy` - Build and deploy to Cloudflare Workers
+- `npm run build-patterns` - Regenerate `src/data/trip-patterns.json` from the trip CSVs
 - `npm run cf-typegen` - Regenerate binding types after editing `wrangler.jsonc`
 - `npm run format` - Format code with Prettier
 - `npm run format:check` - Check formatting

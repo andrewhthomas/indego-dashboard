@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "deploy": "npm run build && wrangler deploy",
-    "cf-typegen": "wrangler types"
+    "cf-typegen": "wrangler types",
+    "build-patterns": "node scripts/build-trip-patterns.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.3.4",
