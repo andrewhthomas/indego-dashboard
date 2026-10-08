@@ -127,7 +127,8 @@ const stationConfig = {
 export function PatternsView() {
   const { meta, hourly, dowHour, monthly, commuter, busiestStations, riders } =
     tripPatterns;
-  const { bikes } = tripPatterns;
+  const { bikes, window: recent } = tripPatterns;
+  const longDate = { month: "short", day: "numeric", year: "numeric" } as const;
   const isMobile = useIsMobile();
   const labelWidth = isMobile ? 120 : 200;
   const labelChars = isMobile ? 17 : 30;
@@ -156,9 +157,12 @@ export function PatternsView() {
 
   const monthlyData = monthly.map((m) => ({
     ...m,
-    // "Jan 25": the data spans more than one year
-    label: formatIsoDate(`${m.month}-01`, { month: "short", year: "2-digit" }),
+    label: formatIsoDate(`${m.month}-01`, { month: "long", year: "numeric" }),
   }));
+  // One x-axis label per year
+  const januaries = monthly
+    .map((m) => m.month)
+    .filter((month) => month.endsWith("-01"));
 
   const riderRows = [
     { label: "Members", sub: "Indego30 + Indego365", ...riders.members },
@@ -172,25 +176,79 @@ export function PatternsView() {
         <h2 className="text-3xl font-bold tracking-tight">Usage Patterns</h2>
         <p className="text-muted-foreground">
           {meta.totalTrips.toLocaleString()} trips from{" "}
-          {formatIsoDate(meta.firstDate, {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          })}{" "}
-          to{" "}
-          {formatIsoDate(meta.lastDate, {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          })}
-          . Times are Philadelphia local time.
+          {formatIsoDate(meta.firstDate, longDate)} to{" "}
+          {formatIsoDate(meta.lastDate, longDate)}. Times are Philadelphia local
+          time.
+        </p>
+      </div>
+
+      <PatternCard
+        title={`Ridership since ${meta.firstDate.slice(0, 4)}`}
+        metric="avg trips per day, by month"
+        note="Every month in the data, split by bike type. The full height is the system total. Electric bikes joined the fleet in late 2018; before that every trip was on a classic bike."
+      >
+        <ChartContainer
+          config={monthlyConfig}
+          className="aspect-auto h-[280px] w-full"
+        >
+          <BarChart
+            data={monthlyData}
+            margin={{ left: 0, right: 12 }}
+            barCategoryGap={1}
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="month"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              ticks={januaries}
+              tickFormatter={(month: string) => month.slice(0, 4)}
+            />
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              width={48}
+              tickFormatter={(value: number) => value.toLocaleString()}
+            />
+            <ChartTooltip
+              content={
+                <ChartTooltipContent
+                  labelFormatter={(_, payload) => payload?.[0]?.payload.label}
+                />
+              }
+            />
+            <ChartLegend content={<ChartLegendContent />} itemSorter={null} />
+            <Bar
+              dataKey="electric"
+              stackId="trips"
+              fill="var(--color-electric)"
+            />
+            <Bar
+              dataKey="standard"
+              stackId="trips"
+              fill="var(--color-standard)"
+            />
+          </BarChart>
+        </ChartContainer>
+      </PatternCard>
+
+      <div>
+        <h3 className="text-xl font-semibold tracking-tight">
+          The last 12 months
+        </h3>
+        <p className="text-muted-foreground">
+          Everything below covers {recent.trips.toLocaleString()} trips from{" "}
+          {formatIsoDate(recent.firstDate, longDate)} to{" "}
+          {formatIsoDate(recent.lastDate, longDate)}, so it reflects how the
+          system is used now.
         </p>
       </div>
 
       <PatternCard
         title="The week at a glance"
         metric="avg trips started, by day and hour"
-        note="Each cell is one hour of one weekday, averaged over the whole period. Darker means more trips. Weekdays show two commute peaks; weekends build to a single afternoon hump."
+        note="Each cell is one hour of one weekday, averaged over the last 12 months. Darker means more trips. Weekdays show two commute peaks; weekends build to a single afternoon hump."
       >
         <HourHeatmap
           unit="trips"
@@ -329,7 +387,7 @@ export function PatternsView() {
       <PatternCard
         title="Busiest stations"
         metric="trips starting or ending there, per day"
-        note="The fifteen stations that handle the most trips, counting both pickups and returns, averaged over every day in the data."
+        note="The fifteen stations that handle the most trips, counting both pickups and returns, averaged over every day of the last 12 months."
       >
         <ChartContainer
           config={stationConfig}
@@ -376,52 +434,6 @@ export function PatternsView() {
             values: station.weekdayHourly,
           }))}
         />
-      </PatternCard>
-
-      <PatternCard
-        title="Seasonality"
-        metric="avg trips per day, by month"
-        note="Total daily ridership each month, split by bike type. The full bar is the system total; the split shows how much of it rides on electric bikes."
-      >
-        <ChartContainer
-          config={monthlyConfig}
-          className="aspect-auto h-[280px] w-full"
-        >
-          <BarChart data={monthlyData} margin={{ left: 0, right: 12 }}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="label"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-            />
-            <YAxis
-              tickLine={false}
-              axisLine={false}
-              width={48}
-              tickFormatter={(value: number) => value.toLocaleString()}
-            />
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <ChartLegend content={<ChartLegendContent />} itemSorter={null} />
-            <Bar
-              dataKey="electric"
-              stackId="trips"
-              fill="var(--color-electric)"
-              stroke="var(--color-card)"
-              strokeWidth={2}
-              maxBarSize={24}
-            />
-            <Bar
-              dataKey="standard"
-              stackId="trips"
-              fill="var(--color-standard)"
-              stroke="var(--color-card)"
-              strokeWidth={2}
-              maxBarSize={24}
-              radius={[4, 4, 0, 0]}
-            />
-          </BarChart>
-        </ChartContainer>
       </PatternCard>
 
       <PatternCard
@@ -575,7 +587,8 @@ export function PatternsView() {
       </PatternCard>
 
       <p className="text-sm text-muted-foreground">
-        Busiest single day: {FULL_DAY_LABELS[dayIndex(meta.busiestDay.date)]},{" "}
+        Busiest single day on record:{" "}
+        {FULL_DAY_LABELS[dayIndex(meta.busiestDay.date)]},{" "}
         {formatIsoDate(meta.busiestDay.date, {
           month: "long",
           day: "numeric",

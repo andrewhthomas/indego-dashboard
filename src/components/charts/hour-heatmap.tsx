@@ -32,9 +32,9 @@ export function HourHeatmap({
 
   return (
     <div>
-      <p className="mb-2 h-5 text-sm font-mono tabular-nums" aria-live="polite">
+      <p className="mb-2 h-5 text-sm" aria-live="polite">
         {hovered ? (
-          <span className="font-medium">
+          <span className="font-mono font-medium tabular-nums">
             {describe(rows[hovered.row], hovered.hour)}
           </span>
         ) : (

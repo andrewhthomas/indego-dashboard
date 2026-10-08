@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 
-import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Card,
   CardContent,
@@ -134,17 +133,11 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function DailyTripChart({ data }: DailyTripChartProps) {
-  const isMobile = useIsMobile();
-  const [timeRange, setTimeRange] = React.useState("90d");
-
-  React.useEffect(() => {
-    if (isMobile) {
-      setTimeRange("7d");
-    }
-  }, [isMobile]);
+  const [timeRange, setTimeRange] = React.useState("all");
 
   const chartData = data || defaultChartData;
   const filteredData = chartData.filter((item) => {
+    if (timeRange === "all") return true;
     const date = new Date(item.date);
     // Use the last date in the dataset as the reference point
     const referenceDate = new Date(chartData[chartData.length - 1].date);
@@ -158,6 +151,9 @@ export function DailyTripChart({ data }: DailyTripChartProps) {
     startDate.setDate(startDate.getDate() - daysToSubtract);
     return date >= startDate;
   });
+
+  // More than a year on screen: tick labels need the year
+  const longRange = filteredData.length > 366;
 
   return (
     <Card>
@@ -173,9 +169,12 @@ export function DailyTripChart({ data }: DailyTripChartProps) {
             className="w-[160px] rounded-lg sm:ml-auto"
             aria-label="Select a time range"
           >
-            <SelectValue placeholder="Last 3 months" />
+            <SelectValue placeholder="Whole period" />
           </SelectTrigger>
           <SelectContent className="rounded-xl">
+            <SelectItem value="all" className="rounded-lg">
+              Whole period
+            </SelectItem>
             <SelectItem value="90d" className="rounded-lg">
               Last 3 months
             </SelectItem>
@@ -216,10 +215,14 @@ export function DailyTripChart({ data }: DailyTripChartProps) {
               tickMargin={8}
               minTickGap={32}
               tickFormatter={(value) => {
+                // Dates are plain "YYYY-MM-DD" keys; format them as UTC so
+                // the label never slips to the previous day.
                 const date = new Date(value);
                 return date.toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
+                  year: longRange ? "2-digit" : undefined,
+                  timeZone: "UTC",
                 });
               }}
             />
@@ -232,6 +235,7 @@ export function DailyTripChart({ data }: DailyTripChartProps) {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
+                      timeZone: "UTC",
                     });
                   }}
                   indicator="dot"

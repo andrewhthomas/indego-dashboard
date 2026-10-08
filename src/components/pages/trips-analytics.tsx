@@ -9,30 +9,31 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   DATA_RANGE_LABEL,
-  loadTripData,
-  type ProcessedTripData,
+  formatPeriod,
+  loadTripStats,
+  type TripStats,
 } from "@/lib/trip-data";
 import { TripStatsOverview } from "@/components/trip-stats-overview";
 import { DailyTripChart } from "@/components/charts/daily-trip-chart";
 import { HourlyDistributionChart } from "@/components/charts/hourly-distribution-chart";
 import { BikeAvailabilityChart } from "@/components/charts/bike-availability-chart";
-import { MonthFilter } from "@/components/month-filter";
+import { PeriodFilter } from "@/components/period-filter";
 import { RoutesViewer } from "@/components/maps/routes-viewer";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function TripsAnalytics() {
-  const [tripData, setTripData] = useState<ProcessedTripData | null>(null);
+  const [tripData, setTripData] = useState<{ stats: TripStats } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedMonth, setSelectedMonth] = useState<string>("all");
+  // "all", a year ("2025") or a month ("2025-06")
+  const [period, setPeriod] = useState<string>("all");
 
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
         setError(null);
-        const data = await loadTripData(selectedMonth);
-        setTripData(data);
+        setTripData({ stats: await loadTripStats(period) });
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to load trip data",
@@ -44,7 +45,7 @@ export function TripsAnalytics() {
     };
 
     loadData();
-  }, [selectedMonth]);
+  }, [period]);
 
   if (error) {
     return (
@@ -60,8 +61,7 @@ export function TripsAnalytics() {
             <div className="text-center text-muted-foreground">
               <p>Error loading trip data: {error}</p>
               <p className="text-sm mt-2">
-                Please ensure the CSV file is properly loaded and the API is
-                accessible.
+                Try reloading the page, or pick a different period.
               </p>
             </div>
           </CardContent>
@@ -70,32 +70,21 @@ export function TripsAnalytics() {
     );
   }
 
-  const getPeriodLabel = () => {
-    if (selectedMonth === "all") return DATA_RANGE_LABEL;
-
-    const [year, monthNum] = selectedMonth.split("-");
-    return new Date(parseInt(year), parseInt(monthNum) - 1).toLocaleDateString(
-      "en-US",
-      { year: "numeric", month: "long" },
-    );
-  };
-  const periodLabel = getPeriodLabel();
-
-  const getFilterDescription = () => {
-    const trips = tripData?.stats.totalTrips.toLocaleString() || "loading";
-    return selectedMonth === "all"
-      ? `Comprehensive analysis of ${trips} trips, ${periodLabel}`
-      : `Analysis of ${trips} trips from ${periodLabel}`;
-  };
+  const periodLabel = formatPeriod(period);
+  const tripCount = tripData?.stats.totalTrips.toLocaleString() || "loading";
+  const filterDescription =
+    period === "all"
+      ? `Comprehensive analysis of ${tripCount} trips, ${periodLabel}`
+      : `Analysis of ${tripCount} trips from ${periodLabel}`;
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between">
         <div className="mb-3 md:mb-0">
           <h2 className="text-3xl font-bold tracking-tight">Trip Analytics</h2>
-          <p className="text-muted-foreground">{getFilterDescription()}</p>
+          <p className="text-muted-foreground">{filterDescription}</p>
         </div>
-        <MonthFilter value={selectedMonth} onValueChange={setSelectedMonth} />
+        <PeriodFilter value={period} onValueChange={setPeriod} />
       </div>
 
       <TripStatsOverview
@@ -104,11 +93,11 @@ export function TripsAnalytics() {
         periodLabel={periodLabel}
       />
 
-      {/* Show message when no data is available for selected month */}
+      {/* Show message when no data is available for the selected period */}
       {!loading &&
         tripData?.stats &&
         tripData.stats.totalTrips === 0 &&
-        selectedMonth !== "all" && (
+        period !== "all" && (
           <Card>
             <CardContent className="p-6">
               <div className="text-center text-muted-foreground">
@@ -130,8 +119,8 @@ export function TripsAnalytics() {
                 </div>
                 <h3 className="text-sm font-medium">No trip data available</h3>
                 <p className="text-sm">
-                  There are no bike trips recorded for the selected month. Try
-                  selecting a different month or view all data.
+                  There are no bike trips recorded for the selected period. Try
+                  selecting a different period or view all data.
                 </p>
               </div>
             </CardContent>

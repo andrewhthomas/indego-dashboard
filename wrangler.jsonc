@@ -9,8 +9,4 @@
     "binding": "ASSETS",
   },
   "observability": { "enabled": true },
-  "r2_buckets": [
-    // Quarterly trip CSVs, served by src/pages/api/trips/[file].ts
-    { "binding": "TRIPS_BUCKET", "bucket_name": "indego-trips" },
-  ],
 }

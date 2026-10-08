@@ -1,71 +1,555 @@
 {
   "meta": {
-    "totalTrips": 2047408,
-    "firstDate": "2025-01-01",
+    "totalTrips": 9754203,
+    "firstDate": "2016-01-01",
     "lastDate": "2026-06-30",
-    "days": 546,
-    "weekdayDays": 390,
-    "weekendDays": 156,
-    "stations": 321,
-    "avgDuration": 17,
-    "electricShare": 68,
-    "avgTripsPerDay": 3750,
-    "peakHour": 17,
+    "days": 3832,
     "busiestDay": {
       "date": "2026-06-19",
       "trips": 8820
     }
   },
-  "hourly": {
-    "weekday": [
-      36.7, 20.4, 13.9, 8.3, 11.9, 43.7, 113.5, 194.9, 302.9, 198.9, 146, 156.7,
-      177.1, 189.9, 207.9, 248.1, 336.2, 429.3, 330.7, 248.4, 178.6, 141.2,
-      112.3, 77.2
-    ],
-    "weekend": [
-      78.2, 61.5, 45.9, 19.7, 13.9, 19.2, 44.5, 70.4, 103, 150.2, 188.9, 208.9,
-      231.6, 235.9, 247, 251.7, 250, 240.3, 223, 190.9, 142, 113.9, 99.8, 82.2
-    ]
-  },
-  "dowHour": [
-    [
-      35.8, 22.1, 14.4, 8.1, 11.1, 39.9, 104.9, 172.8, 264.9, 173.1, 133.1, 145,
-      168.4, 177.6, 193.2, 231.1, 308.1, 404.7, 313.3, 230.8, 170.5, 126.2,
-      86.8, 53.4
-    ],
-    [
-      28.9, 14.9, 10.5, 7.5, 11.4, 49.4, 125.1, 224.6, 343.3, 209.8, 142.8,
-      150.8, 168, 179.5, 197.5, 242.8, 350.6, 471.9, 355.4, 259.8, 185.2, 143.3,
-      109.2, 65.7
-    ],
-    [
-      32.6, 17.1, 11.7, 7.2, 12.1, 46.3, 122.8, 210.7, 333.9, 210, 143.5, 152.5,
-      170.3, 178.5, 198.6, 240, 340.2, 448.8, 331.8, 243.5, 175.4, 142.1, 110.8,
-      67.6
-    ],
-    [
-      36.7, 20.4, 14, 8.3, 12.4, 44.8, 115.1, 199.4, 325.3, 207.1, 148.6, 152.9,
-      175.8, 186.5, 206, 245.2, 338.6, 438.2, 346.7, 258.7, 182.8, 149.9, 120.1,
-      81.8
-    ],
-    [
-      49.7, 27.7, 18.7, 10.4, 12.3, 38, 99.8, 166.8, 247.3, 194.8, 162.2, 182.4,
-      203, 227.2, 244.1, 281.4, 343.5, 383, 306.1, 249.4, 179, 144.8, 134.5,
-      117.4
-    ],
-    [
-      78.8, 62.2, 44.9, 19.7, 13.3, 18.6, 45, 79.4, 112.6, 158.6, 195.8, 221.6,
-      241.8, 249.1, 260.3, 268, 256.9, 246.1, 228, 198.3, 148.3, 123, 117.2,
-      102.3
-    ],
-    [
-      77.7, 60.7, 46.8, 19.6, 14.6, 19.8, 44.1, 61.4, 93.4, 141.8, 182, 196.2,
-      221.4, 222.6, 233.8, 235.5, 243.1, 234.4, 218.1, 183.5, 135.7, 104.7,
-      82.5, 62.1
-    ]
-  ],
-  "dayOfWeek": [3589, 4048, 3948, 4015, 4024, 3489, 3135],
   "monthly": [
+    {
+      "month": "2016-01",
+      "electric": 0,
+      "standard": 613
+    },
+    {
+      "month": "2016-02",
+      "electric": 0,
+      "standard": 665
+    },
+    {
+      "month": "2016-03",
+      "electric": 0,
+      "standard": 1165
+    },
+    {
+      "month": "2016-04",
+      "electric": 0,
+      "standard": 1411
+    },
+    {
+      "month": "2016-05",
+      "electric": 0,
+      "standard": 1804
+    },
+    {
+      "month": "2016-06",
+      "electric": 0,
+      "standard": 2419
+    },
+    {
+      "month": "2016-07",
+      "electric": 0,
+      "standard": 2473
+    },
+    {
+      "month": "2016-08",
+      "electric": 0,
+      "standard": 2520
+    },
+    {
+      "month": "2016-09",
+      "electric": 0,
+      "standard": 2672
+    },
+    {
+      "month": "2016-10",
+      "electric": 0,
+      "standard": 2349
+    },
+    {
+      "month": "2016-11",
+      "electric": 0,
+      "standard": 2296
+    },
+    {
+      "month": "2016-12",
+      "electric": 0,
+      "standard": 1110
+    },
+    {
+      "month": "2017-01",
+      "electric": 0,
+      "standard": 1006
+    },
+    {
+      "month": "2017-02",
+      "electric": 0,
+      "standard": 1413
+    },
+    {
+      "month": "2017-03",
+      "electric": 0,
+      "standard": 1194
+    },
+    {
+      "month": "2017-04",
+      "electric": 0,
+      "standard": 2205
+    },
+    {
+      "month": "2017-05",
+      "electric": 0,
+      "standard": 2247
+    },
+    {
+      "month": "2017-06",
+      "electric": 0,
+      "standard": 2821
+    },
+    {
+      "month": "2017-07",
+      "electric": 0,
+      "standard": 2940
+    },
+    {
+      "month": "2017-08",
+      "electric": 0,
+      "standard": 3050
+    },
+    {
+      "month": "2017-09",
+      "electric": 0,
+      "standard": 3037
+    },
+    {
+      "month": "2017-10",
+      "electric": 0,
+      "standard": 2842
+    },
+    {
+      "month": "2017-11",
+      "electric": 0,
+      "standard": 1995
+    },
+    {
+      "month": "2017-12",
+      "electric": 0,
+      "standard": 1160
+    },
+    {
+      "month": "2018-01",
+      "electric": 0,
+      "standard": 927
+    },
+    {
+      "month": "2018-02",
+      "electric": 0,
+      "standard": 1239
+    },
+    {
+      "month": "2018-03",
+      "electric": 0,
+      "standard": 1147
+    },
+    {
+      "month": "2018-04",
+      "electric": 0,
+      "standard": 1717
+    },
+    {
+      "month": "2018-05",
+      "electric": 0,
+      "standard": 2330
+    },
+    {
+      "month": "2018-06",
+      "electric": 0,
+      "standard": 2596
+    },
+    {
+      "month": "2018-07",
+      "electric": 0,
+      "standard": 2626
+    },
+    {
+      "month": "2018-08",
+      "electric": 0,
+      "standard": 2559
+    },
+    {
+      "month": "2018-09",
+      "electric": 0,
+      "standard": 2254
+    },
+    {
+      "month": "2018-10",
+      "electric": 0,
+      "standard": 2211
+    },
+    {
+      "month": "2018-11",
+      "electric": 30,
+      "standard": 1386
+    },
+    {
+      "month": "2018-12",
+      "electric": 37,
+      "standard": 990
+    },
+    {
+      "month": "2019-01",
+      "electric": 39,
+      "standard": 937
+    },
+    {
+      "month": "2019-02",
+      "electric": 37,
+      "standard": 960
+    },
+    {
+      "month": "2019-03",
+      "electric": 2,
+      "standard": 1236
+    },
+    {
+      "month": "2019-04",
+      "electric": 1,
+      "standard": 1936
+    },
+    {
+      "month": "2019-05",
+      "electric": 91,
+      "standard": 2081
+    },
+    {
+      "month": "2019-06",
+      "electric": 347,
+      "standard": 2352
+    },
+    {
+      "month": "2019-07",
+      "electric": 473,
+      "standard": 2258
+    },
+    {
+      "month": "2019-08",
+      "electric": 754,
+      "standard": 2307
+    },
+    {
+      "month": "2019-09",
+      "electric": 716,
+      "standard": 2472
+    },
+    {
+      "month": "2019-10",
+      "electric": 493,
+      "standard": 2041
+    },
+    {
+      "month": "2019-11",
+      "electric": 336,
+      "standard": 1453
+    },
+    {
+      "month": "2019-12",
+      "electric": 204,
+      "standard": 890
+    },
+    {
+      "month": "2020-01",
+      "electric": 98,
+      "standard": 1204
+    },
+    {
+      "month": "2020-02",
+      "electric": 102,
+      "standard": 1213
+    },
+    {
+      "month": "2020-03",
+      "electric": 266,
+      "standard": 1014
+    },
+    {
+      "month": "2020-04",
+      "electric": 283,
+      "standard": 751
+    },
+    {
+      "month": "2020-05",
+      "electric": 562,
+      "standard": 1593
+    },
+    {
+      "month": "2020-06",
+      "electric": 750,
+      "standard": 2209
+    },
+    {
+      "month": "2020-07",
+      "electric": 732,
+      "standard": 2225
+    },
+    {
+      "month": "2020-08",
+      "electric": 631,
+      "standard": 2238
+    },
+    {
+      "month": "2020-09",
+      "electric": 624,
+      "standard": 2356
+    },
+    {
+      "month": "2020-10",
+      "electric": 521,
+      "standard": 1955
+    },
+    {
+      "month": "2020-11",
+      "electric": 420,
+      "standard": 1389
+    },
+    {
+      "month": "2020-12",
+      "electric": 240,
+      "standard": 708
+    },
+    {
+      "month": "2021-01",
+      "electric": 260,
+      "standard": 727
+    },
+    {
+      "month": "2021-02",
+      "electric": 185,
+      "standard": 478
+    },
+    {
+      "month": "2021-03",
+      "electric": 440,
+      "standard": 1081
+    },
+    {
+      "month": "2021-04",
+      "electric": 569,
+      "standard": 1512
+    },
+    {
+      "month": "2021-05",
+      "electric": 703,
+      "standard": 1980
+    },
+    {
+      "month": "2021-06",
+      "electric": 855,
+      "standard": 2032
+    },
+    {
+      "month": "2021-07",
+      "electric": 1014,
+      "standard": 2078
+    },
+    {
+      "month": "2021-08",
+      "electric": 1098,
+      "standard": 2041
+    },
+    {
+      "month": "2021-09",
+      "electric": 1315,
+      "standard": 2260
+    },
+    {
+      "month": "2021-10",
+      "electric": 1299,
+      "standard": 1976
+    },
+    {
+      "month": "2021-11",
+      "electric": 941,
+      "standard": 1351
+    },
+    {
+      "month": "2021-12",
+      "electric": 714,
+      "standard": 985
+    },
+    {
+      "month": "2022-01",
+      "electric": 462,
+      "standard": 591
+    },
+    {
+      "month": "2022-02",
+      "electric": 590,
+      "standard": 759
+    },
+    {
+      "month": "2022-03",
+      "electric": 799,
+      "standard": 1093
+    },
+    {
+      "month": "2022-04",
+      "electric": 941,
+      "standard": 1502
+    },
+    {
+      "month": "2022-05",
+      "electric": 940,
+      "standard": 1867
+    },
+    {
+      "month": "2022-06",
+      "electric": 1098,
+      "standard": 2137
+    },
+    {
+      "month": "2022-07",
+      "electric": 1184,
+      "standard": 1962
+    },
+    {
+      "month": "2022-08",
+      "electric": 1390,
+      "standard": 1995
+    },
+    {
+      "month": "2022-09",
+      "electric": 1530,
+      "standard": 2135
+    },
+    {
+      "month": "2022-10",
+      "electric": 1380,
+      "standard": 1474
+    },
+    {
+      "month": "2022-11",
+      "electric": 1205,
+      "standard": 1268
+    },
+    {
+      "month": "2022-12",
+      "electric": 713,
+      "standard": 716
+    },
+    {
+      "month": "2023-01",
+      "electric": 829,
+      "standard": 840
+    },
+    {
+      "month": "2023-02",
+      "electric": 981,
+      "standard": 924
+    },
+    {
+      "month": "2023-03",
+      "electric": 1032,
+      "standard": 961
+    },
+    {
+      "month": "2023-04",
+      "electric": 1470,
+      "standard": 1359
+    },
+    {
+      "month": "2023-05",
+      "electric": 1767,
+      "standard": 1660
+    },
+    {
+      "month": "2023-06",
+      "electric": 1754,
+      "standard": 1607
+    },
+    {
+      "month": "2023-07",
+      "electric": 1944,
+      "standard": 1651
+    },
+    {
+      "month": "2023-08",
+      "electric": 2155,
+      "standard": 1896
+    },
+    {
+      "month": "2023-09",
+      "electric": 2136,
+      "standard": 1738
+    },
+    {
+      "month": "2023-10",
+      "electric": 2158,
+      "standard": 1793
+    },
+    {
+      "month": "2023-11",
+      "electric": 1632,
+      "standard": 1274
+    },
+    {
+      "month": "2023-12",
+      "electric": 1188,
+      "standard": 841
+    },
+    {
+      "month": "2024-01",
+      "electric": 952,
+      "standard": 668
+    },
+    {
+      "month": "2024-02",
+      "electric": 1290,
+      "standard": 913
+    },
+    {
+      "month": "2024-03",
+      "electric": 1518,
+      "standard": 1052
+    },
+    {
+      "month": "2024-04",
+      "electric": 2011,
+      "standard": 1395
+    },
+    {
+      "month": "2024-05",
+      "electric": 2393,
+      "standard": 1688
+    },
+    {
+      "month": "2024-06",
+      "electric": 2733,
+      "standard": 1914
+    },
+    {
+      "month": "2024-07",
+      "electric": 2618,
+      "standard": 1777
+    },
+    {
+      "month": "2024-08",
+      "electric": 2523,
+      "standard": 1799
+    },
+    {
+      "month": "2024-09",
+      "electric": 2582,
+      "standard": 2024
+    },
+    {
+      "month": "2024-10",
+      "electric": 2548,
+      "standard": 1920
+    },
+    {
+      "month": "2024-11",
+      "electric": 1958,
+      "standard": 1376
+    },
+    {
+      "month": "2024-12",
+      "electric": 1219,
+      "standard": 736
+    },
     {
       "month": "2025-01",
       "electric": 1062,
@@ -157,149 +641,254 @@
       "standard": 1799
     }
   ],
+  "yearly": [
+    {
+      "year": "2016",
+      "trips": 655058
+    },
+    {
+      "year": "2017",
+      "trips": 788907
+    },
+    {
+      "year": "2018",
+      "trips": 671818
+    },
+    {
+      "year": "2019",
+      "trips": 744260
+    },
+    {
+      "year": "2020",
+      "trips": 735162
+    },
+    {
+      "year": "2021",
+      "trips": 851863
+    },
+    {
+      "year": "2022",
+      "trips": 905790
+    },
+    {
+      "year": "2023",
+      "trips": 1084547
+    },
+    {
+      "year": "2024",
+      "trips": 1269390
+    },
+    {
+      "year": "2025",
+      "trips": 1358173
+    },
+    {
+      "year": "2026",
+      "trips": 689235
+    }
+  ],
+  "window": {
+    "firstDate": "2025-07-01",
+    "lastDate": "2026-06-30",
+    "days": 365,
+    "trips": 1480060,
+    "avgDuration": 17,
+    "electricShare": 69,
+    "avgTripsPerDay": 4055,
+    "peakHour": 17
+  },
+  "hourly": {
+    "weekday": [
+      40.1, 22, 15.1, 9.6, 12.9, 47.8, 122.2, 209.9, 323.5, 212.2, 158.4, 169.3,
+      190.4, 204.4, 225.6, 268.2, 364.7, 460.3, 354.9, 267.4, 194.4, 156.1,
+      124.2, 85.7
+    ],
+    "weekend": [
+      87.7, 68.8, 49.8, 22.2, 15.8, 20.7, 48.9, 76.2, 114, 162.6, 205.4, 226.7,
+      249.8, 254.8, 267.6, 274.6, 273.3, 260.4, 237.4, 205.3, 152.3, 123.1,
+      106.7, 88.3
+    ]
+  },
+  "dowHour": [
+    [
+      35.7, 22, 14.6, 9.6, 11.4, 43.3, 111.4, 186.3, 286.5, 188, 145.6, 155.4,
+      178.8, 190.8, 207.7, 250.5, 333.8, 432.5, 332.4, 244.4, 180.7, 140, 95.2,
+      58.3
+    ],
+    [
+      32.7, 16.5, 12.2, 8.6, 12.5, 54.2, 134.4, 237.8, 363.4, 219.6, 155.6,
+      163.4, 180.1, 192.5, 211.4, 257.4, 376.3, 497.5, 378.1, 273.5, 200.1,
+      156.6, 120.1, 72.1
+    ],
+    [
+      34.4, 17.1, 12.6, 8, 13.4, 51.2, 133.7, 230, 359.5, 227.1, 157.1, 166.3,
+      183.3, 195.3, 219, 264.8, 373.7, 488.6, 358.7, 264.2, 192.2, 156.3, 122.8,
+      75.1
+    ],
+    [
+      40.6, 23.1, 15.5, 9.2, 13.6, 48.9, 124.2, 215.2, 346.5, 220.9, 159.4,
+      164.6, 189.5, 198.6, 221.8, 265.9, 368.5, 473.3, 373.7, 280, 201.7, 165.6,
+      130.9, 91.3
+    ],
+    [
+      57, 31.2, 21, 12.4, 13.8, 41.2, 107, 179.9, 260.7, 205.5, 174.5, 196.7,
+      220.5, 244.8, 268.5, 302.6, 371.2, 408.8, 331.3, 274.7, 197.3, 162.1,
+      152.1, 132.2
+    ],
+    [
+      89.6, 70, 50.2, 22.5, 15.2, 20.2, 50, 86.3, 125.4, 171.7, 214.4, 240.2,
+      260.5, 268.8, 281.7, 293.4, 280.1, 265.6, 241.9, 213.8, 159.8, 133.3,
+      128.6, 112.9
+    ],
+    [
+      85.8, 67.5, 49.4, 22, 16.4, 21.2, 47.8, 66, 102.5, 153.4, 196.4, 213.2,
+      239.2, 240.7, 253.4, 255.8, 266.5, 255.2, 232.9, 196.8, 144.9, 112.8,
+      84.9, 63.7
+    ]
+  ],
   "commuter": {
     "exporters": [
       {
-        "id": "3012",
-        "name": "21st & Catharine",
-        "departures": 8.5,
-        "arrivals": 1.9,
-        "net": -6.6
-      },
-      {
         "id": "3100",
         "name": "Moyamensing & Tasker",
-        "departures": 7.9,
-        "arrivals": 1.7,
-        "net": -6.2
+        "departures": 8.4,
+        "arrivals": 1.8,
+        "net": -6.5
+      },
+      {
+        "id": "3012",
+        "name": "21st & Catharine",
+        "departures": 8.2,
+        "arrivals": 1.9,
+        "net": -6.3
       },
       {
         "id": "3064",
         "name": "18th & Washington, Chew Playground",
-        "departures": 6.5,
-        "arrivals": 1.3,
-        "net": -5.3
+        "departures": 7.2,
+        "arrivals": 1.2,
+        "net": -5.9
       },
       {
         "id": "3051",
         "name": "23rd & Fairmount",
-        "departures": 6.4,
-        "arrivals": 1.3,
-        "net": -5.2
+        "departures": 7,
+        "arrivals": 1.5,
+        "net": -5.6
+      },
+      {
+        "id": "3361",
+        "name": "18th & Fernon, Aquinas Center",
+        "departures": 6.2,
+        "arrivals": 0.7,
+        "net": -5.5
       },
       {
         "id": "3034",
         "name": "11th & Reed",
         "departures": 7,
-        "arrivals": 1.9,
-        "net": -5.1
-      },
-      {
-        "id": "3030",
-        "name": "Darien & Catharine",
-        "departures": 6.7,
         "arrivals": 1.8,
-        "net": -4.9
-      },
-      {
-        "id": "3203",
-        "name": "18th & Christian",
-        "departures": 7.4,
-        "arrivals": 2.5,
-        "net": -4.9
-      },
-      {
-        "id": "3361",
-        "name": "18th & Fernon, Aquinas Center",
-        "departures": 5.4,
-        "arrivals": 0.7,
-        "net": -4.7
+        "net": -5.2
       },
       {
         "id": "3102",
         "name": "Pennsylvania & Fairmount Perelman Building",
-        "departures": 6,
+        "departures": 6.5,
         "arrivals": 1.4,
-        "net": -4.6
+        "net": -5.1
       },
       {
-        "id": "3340",
-        "name": "27th & Pennsylvania",
+        "id": "3203",
+        "name": "18th & Christian",
+        "departures": 7.2,
+        "arrivals": 2.5,
+        "net": -4.7
+      },
+      {
+        "id": "3114",
+        "name": "22nd & Federal",
         "departures": 5.3,
+        "arrivals": 0.8,
+        "net": -4.5
+      },
+      {
+        "id": "3155",
+        "name": "7th & Fitzwater",
+        "departures": 5.5,
         "arrivals": 1,
-        "net": -4.3
+        "net": -4.5
       }
     ],
     "importers": [
       {
         "id": "3038",
         "name": "The Children's Hospital of Philadelphia (CHOP)",
-        "departures": 1.4,
-        "arrivals": 13.2,
-        "net": 11.8
+        "departures": 1.5,
+        "arrivals": 13.6,
+        "net": 12.2
       },
       {
         "id": "3020",
         "name": "University City Station",
-        "departures": 3.7,
-        "arrivals": 14.8,
+        "departures": 4,
+        "arrivals": 15.2,
+        "net": 11.2
+      },
+      {
+        "id": "3021",
+        "name": "18th & JFK",
+        "departures": 1.5,
+        "arrivals": 12.6,
         "net": 11.1
       },
       {
         "id": "3208",
         "name": "34th & Spruce",
-        "departures": 2.1,
-        "arrivals": 12.5,
-        "net": 10.4
-      },
-      {
-        "id": "3021",
-        "name": "18th & JFK",
-        "departures": 1.2,
-        "arrivals": 11.4,
-        "net": 10.2
+        "departures": 2.3,
+        "arrivals": 12.9,
+        "net": 10.6
       },
       {
         "id": "3333",
         "name": "18th & JFK Curbside",
         "departures": 0.7,
-        "arrivals": 8.9,
-        "net": 8.3
+        "arrivals": 9.4,
+        "net": 8.8
       },
       {
         "id": "3205",
         "name": "17th & JFK",
         "departures": 1,
-        "arrivals": 8.5,
-        "net": 7.5
+        "arrivals": 9,
+        "net": 7.9
       },
       {
         "id": "3052",
         "name": "9th & Locust",
-        "departures": 2.4,
-        "arrivals": 8.8,
-        "net": 6.4
+        "departures": 2.6,
+        "arrivals": 9.4,
+        "net": 6.8
       },
       {
         "id": "3156",
         "name": "20th & Market",
-        "departures": 1.9,
-        "arrivals": 8.2,
-        "net": 6.3
+        "departures": 2,
+        "arrivals": 8.4,
+        "net": 6.4
       },
       {
         "id": "3161",
         "name": "30th Street Station East",
-        "departures": 4.6,
-        "arrivals": 10.7,
+        "departures": 5,
+        "arrivals": 11,
         "net": 6.1
       },
       {
-        "id": "3346",
-        "name": "6th & Chestnut",
-        "departures": 0.9,
-        "arrivals": 6.5,
-        "net": 5.6
+        "id": "3159",
+        "name": "38th & Spruce",
+        "departures": 1.4,
+        "arrivals": 7.2,
+        "net": 5.8
       }
     ]
   },
@@ -307,283 +896,283 @@
     {
       "id": "3010",
       "name": "15th & Spruce",
-      "starts": 63.2,
-      "ends": 62.3,
+      "starts": 66.4,
+      "ends": 65.6,
       "weekdayHourly": [
-        0.7, 0.4, 0.2, 0.1, 0.3, 0.4, 1.6, 2.1, 4.4, 3.2, 2.4, 2.4, 2.9, 3.4,
-        3.3, 4.1, 5.4, 7.6, 5.7, 5.2, 3.5, 3, 2.8, 1.8
+        0.8, 0.4, 0.3, 0.2, 0.3, 0.3, 1.4, 2, 4.5, 3.6, 2.5, 2.7, 3, 3.7, 3.5,
+        4.5, 5.8, 8, 5.9, 5.2, 3.6, 3.2, 3, 1.9
       ]
     },
     {
       "id": "3032",
       "name": "23rd & South",
-      "starts": 46.9,
-      "ends": 46.6,
+      "starts": 49.4,
+      "ends": 49.4,
       "weekdayHourly": [
-        0.3, 0.2, 0.1, 0, 0, 0.7, 2.8, 3, 4.1, 3, 2.1, 1.9, 2, 2.2, 2.2, 3.2,
-        3.8, 5.8, 4.2, 3.6, 2.2, 1.4, 1.1, 0.6
-      ]
-    },
-    {
-      "id": "3028",
-      "name": "4th & Bainbridge",
-      "starts": 39.1,
-      "ends": 39.2,
-      "weekdayHourly": [
-        0.5, 0.3, 0.3, 0.1, 0.1, 0.3, 0.6, 1.7, 3.4, 2.3, 1.8, 1.7, 1.9, 2.2,
-        1.9, 2, 2.8, 3.7, 3.5, 2.7, 2.1, 1.3, 1.7, 1
-      ]
-    },
-    {
-      "id": "3020",
-      "name": "University City Station",
-      "starts": 40.7,
-      "ends": 37.4,
-      "weekdayHourly": [
-        0.2, 0.1, 0, 0, 0, 0, 0.9, 2.6, 1.1, 0.7, 0.6, 0.9, 1.3, 1.7, 2.4, 4.5,
-        8.5, 9.8, 5.2, 4.7, 1.9, 1.1, 0.8, 0.7
-      ]
-    },
-    {
-      "id": "3185",
-      "name": "11th & Market",
-      "starts": 38.3,
-      "ends": 38,
-      "weekdayHourly": [
-        0.5, 0.2, 0.1, 0.1, 0, 0.1, 0.4, 0.8, 2.3, 1, 0.9, 1.3, 1.7, 1.8, 2.2,
-        3.2, 5.6, 6, 4.2, 2.7, 2, 1.9, 1.2, 0.8
-      ]
-    },
-    {
-      "id": "3161",
-      "name": "30th Street Station East",
-      "starts": 36.2,
-      "ends": 39.1,
-      "weekdayHourly": [
-        0.3, 0.2, 0.1, 0, 0, 0.2, 1.6, 2.1, 2.5, 1.9, 1, 1.1, 1.1, 1.6, 1.3,
-        2.3, 4, 6.9, 5.8, 2.2, 1.7, 1.2, 1.2, 0.5
-      ]
-    },
-    {
-      "id": "3359",
-      "name": "17th & Locust",
-      "starts": 37.3,
-      "ends": 36.9,
-      "weekdayHourly": [
-        0.5, 0.2, 0.1, 0, 0.2, 0.5, 1.8, 1.5, 2.7, 1.4, 1.1, 1.3, 1.4, 1.8, 2.2,
-        2.7, 3.2, 5.1, 2.9, 2.5, 2, 1.6, 1.8, 1.2
-      ]
-    },
-    {
-      "id": "3022",
-      "name": "Amtrak 30th Street Station",
-      "starts": 36.1,
-      "ends": 37.5,
-      "weekdayHourly": [
-        0.5, 0.5, 0.2, 0.1, 0.1, 0.2, 1, 1.2, 2.3, 1.9, 1.1, 1.2, 1.6, 1.5, 2.1,
-        2.5, 3.8, 6.7, 3.6, 2.4, 1.9, 1.3, 1.3, 0.8
+        0.3, 0.2, 0.1, 0.1, 0.1, 0.7, 2.9, 2.8, 4.5, 2.8, 2.2, 2, 2.1, 2.3, 2.4,
+        3.4, 3.8, 6.1, 4.6, 3.8, 2.4, 1.7, 1.3, 0.7
       ]
     },
     {
       "id": "3213",
       "name": "Broad & Carpenter",
-      "starts": 36.2,
-      "ends": 36.8,
+      "starts": 45.1,
+      "ends": 45.5,
       "weekdayHourly": [
-        0.2, 0.1, 0.1, 0, 0.1, 0.5, 0.9, 1.7, 2.9, 2.2, 1.4, 1.4, 1.5, 1.9, 2.1,
-        2.6, 2.8, 3.8, 3.4, 2.7, 2.2, 1.9, 0.8, 0.5
+        0.3, 0.1, 0.1, 0, 0.1, 0.7, 1.1, 2.3, 3.8, 2.8, 1.7, 1.7, 1.9, 2.3, 2.7,
+        3.2, 3.5, 4.7, 4.1, 3.2, 2.7, 2.4, 0.9, 0.6
+      ]
+    },
+    {
+      "id": "3028",
+      "name": "4th & Bainbridge",
+      "starts": 41,
+      "ends": 41.2,
+      "weekdayHourly": [
+        0.5, 0.3, 0.3, 0.1, 0.1, 0.2, 0.6, 1.7, 3.7, 2.2, 1.7, 1.7, 2, 2.3, 2,
+        2.1, 2.9, 3.9, 3.9, 2.9, 2.2, 1.4, 1.9, 1.1
+      ]
+    },
+    {
+      "id": "3020",
+      "name": "University City Station",
+      "starts": 42.7,
+      "ends": 39.1,
+      "weekdayHourly": [
+        0.2, 0.1, 0, 0, 0, 0, 1, 2.8, 1.2, 0.7, 0.6, 1, 1.4, 1.7, 2.6, 4.8, 8.9,
+        10.3, 5.2, 4.8, 2.1, 1.3, 0.9, 0.8
+      ]
+    },
+    {
+      "id": "3185",
+      "name": "11th & Market",
+      "starts": 40.8,
+      "ends": 40.5,
+      "weekdayHourly": [
+        0.5, 0.2, 0.1, 0.1, 0, 0.1, 0.5, 0.9, 2.5, 1.1, 1, 1.3, 1.8, 1.8, 2.4,
+        3.5, 6.2, 6.4, 4.3, 2.8, 2, 2.1, 1.3, 0.9
+      ]
+    },
+    {
+      "id": "3161",
+      "name": "30th Street Station East",
+      "starts": 37.9,
+      "ends": 41.9,
+      "weekdayHourly": [
+        0.3, 0.2, 0.1, 0, 0, 0.3, 1.7, 2.1, 2.8, 1.9, 1, 1.2, 1.2, 1.6, 1.3,
+        2.2, 4.2, 7.3, 5.9, 2.4, 1.7, 1.3, 1.2, 0.5
       ]
     },
     {
       "id": "3163",
       "name": "25th & Locust",
-      "starts": 36.4,
-      "ends": 36.5,
+      "starts": 39.2,
+      "ends": 39.1,
       "weekdayHourly": [
-        0.2, 0.1, 0, 0, 0.1, 0.5, 1.6, 2.5, 3.8, 1.8, 1.3, 1.4, 1.4, 1.4, 1.4,
-        1.6, 2.2, 3.6, 3.4, 3, 1.9, 1.1, 0.8, 0.5
+        0.3, 0.1, 0, 0, 0.1, 0.6, 1.6, 2.4, 4.4, 1.9, 1.4, 1.5, 1.5, 1.5, 1.3,
+        1.8, 2.2, 4, 3.7, 3.3, 2.2, 1.2, 0.9, 0.6
       ]
     },
     {
-      "id": "3362",
-      "name": "13th & Locust",
-      "starts": 34.4,
-      "ends": 33.9,
+      "id": "3022",
+      "name": "Amtrak 30th Street Station",
+      "starts": 37.9,
+      "ends": 40,
       "weekdayHourly": [
-        0.7, 0.3, 0.6, 0.2, 0.1, 0.1, 0.7, 1.6, 2, 1.4, 1, 1, 1.4, 1.7, 1.6,
-        1.9, 2.4, 3.9, 3.1, 2.5, 1.8, 1.9, 1.9, 1.3
+        0.5, 0.5, 0.2, 0.1, 0.1, 0.1, 1.2, 1.1, 2.4, 1.9, 1.2, 1.3, 1.6, 1.6,
+        2.3, 2.7, 4.1, 7, 4, 2.5, 2, 1.4, 1.3, 0.9
       ]
     },
     {
-      "id": "3066",
-      "name": "19th & Lombard",
-      "starts": 35.6,
-      "ends": 32.6,
+      "id": "3359",
+      "name": "17th & Locust",
+      "starts": 36.9,
+      "ends": 36.8,
       "weekdayHourly": [
-        0.3, 0.1, 0.1, 0, 0.1, 1, 2.5, 3.3, 4.4, 2.3, 1.3, 1.3, 1.5, 1.8, 1.7,
-        1.8, 3.2, 3.6, 2.9, 2, 1.1, 1.1, 0.9, 0.7
+        0.4, 0.2, 0.1, 0, 0.2, 0.5, 1.7, 1.4, 2.6, 1.4, 1.1, 1.4, 1.5, 1.8, 2.3,
+        2.8, 3.2, 4.8, 3, 2.4, 1.8, 1.5, 1.6, 1
       ]
     },
     {
       "id": "3059",
       "name": "Spring Garden Station, BSL",
-      "starts": 34.6,
-      "ends": 33.3,
+      "starts": 37.1,
+      "ends": 35.9,
       "weekdayHourly": [
-        0.6, 0.2, 0.1, 0.1, 0.1, 0.2, 0.6, 1.4, 2.7, 2.4, 1.7, 1.4, 1.7, 2, 1.9,
-        2.1, 2.4, 3.5, 3, 2.7, 1.9, 1.8, 1.3, 1
+        0.5, 0.2, 0.1, 0.2, 0.1, 0.2, 0.8, 1.6, 3, 2.5, 1.8, 1.6, 1.8, 1.9, 1.9,
+        2.4, 2.5, 3.6, 3.2, 2.8, 2.1, 2.1, 1.4, 1.2
       ]
     },
     {
       "id": "3101",
       "name": "11th & South",
-      "starts": 34,
-      "ends": 33,
+      "starts": 35.9,
+      "ends": 35.3,
       "weekdayHourly": [
-        0.2, 0.2, 0.1, 0, 0.2, 0.3, 1, 1.3, 2.9, 1.9, 1.5, 1.5, 1.6, 1.7, 2.1,
-        1.9, 2.1, 2.9, 2.9, 2.5, 2, 1.7, 0.9, 0.4
+        0.3, 0.2, 0.2, 0, 0.3, 0.3, 1.1, 1.2, 2.8, 1.8, 1.5, 1.7, 1.8, 1.8, 2.1,
+        2.2, 2.4, 3.1, 3.3, 2.9, 2.3, 1.8, 1, 0.4
+      ]
+    },
+    {
+      "id": "3362",
+      "name": "13th & Locust",
+      "starts": 35.3,
+      "ends": 34.7,
+      "weekdayHourly": [
+        0.7, 0.4, 0.5, 0.2, 0.1, 0.1, 0.7, 1.5, 1.9, 1.3, 1, 1.1, 1.4, 1.6, 1.7,
+        2, 2.7, 3.9, 3.1, 2.6, 2, 2, 2, 1.4
+      ]
+    },
+    {
+      "id": "3066",
+      "name": "19th & Lombard",
+      "starts": 35.9,
+      "ends": 33.2,
+      "weekdayHourly": [
+        0.3, 0.2, 0.1, 0, 0.1, 0.9, 2.5, 3.1, 4.3, 2.3, 1.3, 1.3, 1.5, 1.8, 1.7,
+        2, 3.2, 3.5, 3, 2.3, 1.2, 1.1, 1, 0.7
       ]
     },
     {
       "id": "3208",
       "name": "34th & Spruce",
-      "starts": 33.1,
-      "ends": 32.6,
+      "starts": 34.2,
+      "ends": 34,
       "weekdayHourly": [
-        0.1, 0.1, 0, 0, 0, 0.1, 0.4, 1.6, 0.6, 0.6, 0.9, 1.4, 1.9, 2, 3.1, 4.2,
-        9.6, 6.9, 3.2, 2.2, 0.8, 0.4, 0.2, 0.2
+        0.1, 0.1, 0, 0, 0, 0.1, 0.4, 1.7, 0.6, 0.7, 1, 1.6, 1.9, 2.1, 3.3, 4.7,
+        9.8, 6.5, 3.1, 2.4, 0.9, 0.5, 0.2, 0.2
       ]
     }
   ],
   "riders": {
     "members": {
-      "trips": 1818725,
-      "medianDuration": 9,
-      "roundTripShare": 5.2,
-      "electricShare": 66.8,
+      "trips": 1311225,
+      "medianDuration": 10,
+      "roundTripShare": 5.1,
+      "electricShare": 68.1,
       "weekendShare": 23,
       "hourlyShare": [
-        1.19, 0.76, 0.53, 0.28, 0.33, 1.05, 2.71, 4.59, 7.06, 5.17, 4.23, 4.5,
-        4.99, 5.22, 5.64, 6.46, 8.31, 10.14, 7.99, 6.14, 4.42, 3.49, 2.8, 1.98
+        1.22, 0.77, 0.54, 0.3, 0.34, 1.06, 2.71, 4.59, 7, 5.12, 4.25, 4.51,
+        4.97, 5.21, 5.66, 6.49, 8.37, 10.08, 7.91, 6.11, 4.43, 3.54, 2.83, 2.01
       ]
     },
     "casual": {
-      "trips": 228554,
+      "trips": 168714,
       "medianDuration": 18,
-      "roundTripShare": 14.2,
-      "electricShare": 74.3,
+      "roundTripShare": 13.8,
+      "electricShare": 75.8,
       "weekendShare": 43,
       "hourlyShare": [
-        2.13, 1.65, 1.25, 0.51, 0.33, 0.43, 0.84, 1.5, 2.54, 3.07, 4.11, 5.2,
-        6.31, 6.94, 7.43, 8.11, 8.34, 8.92, 8.02, 6.54, 5, 4.13, 3.69, 3
+        2.12, 1.65, 1.23, 0.53, 0.34, 0.44, 0.89, 1.5, 2.66, 3.05, 4.11, 5.12,
+        6.25, 6.79, 7.41, 7.98, 8.23, 8.9, 8.07, 6.54, 5.05, 4.25, 3.79, 3.1
       ]
     },
     "passTypes": [
       {
         "type": "Indego30",
-        "trips": 1040555,
+        "trips": 757376,
         "medianDuration": 10,
-        "roundTripShare": 6.4,
-        "electricShare": 63,
-        "weekendShare": 25.2
+        "roundTripShare": 6.3,
+        "electricShare": 64.1,
+        "weekendShare": 25.1
       },
       {
         "type": "Indego365",
-        "trips": 778170,
+        "trips": 553849,
         "medianDuration": 9,
-        "roundTripShare": 3.6,
-        "electricShare": 72,
-        "weekendShare": 20.1
+        "roundTripShare": 3.5,
+        "electricShare": 73.7,
+        "weekendShare": 20
       },
       {
         "type": "Walk-up",
-        "trips": 154037,
+        "trips": 115403,
         "medianDuration": 16,
-        "roundTripShare": 13.8,
-        "electricShare": 77.8,
-        "weekendShare": 40.4
+        "roundTripShare": 13.2,
+        "electricShare": 79.2,
+        "weekendShare": 40.3
       },
       {
         "type": "Day Pass",
-        "trips": 74517,
+        "trips": 53311,
         "medianDuration": 23,
         "roundTripShare": 15,
-        "electricShare": 67,
-        "weekendShare": 48.4
+        "electricShare": 68.3,
+        "weekendShare": 48.7
       }
     ]
   },
   "bikes": {
     "electric": {
-      "bikes": 2379,
-      "trips": 1385546,
-      "tripsPerActiveDay": 2.97
+      "bikes": 2266,
+      "trips": 1021483,
+      "tripsPerActiveDay": 3.03
     },
     "standard": {
-      "bikes": 830,
-      "trips": 661862,
-      "tripsPerActiveDay": 3.4
+      "bikes": 744,
+      "trips": 458577,
+      "tripsPerActiveDay": 3.64
     },
     "top": [
       {
         "id": "14627",
         "type": "standard",
-        "trips": 1399,
-        "activeDays": 359
-      },
-      {
-        "id": "14545",
-        "type": "standard",
-        "trips": 1390,
-        "activeDays": 362
-      },
-      {
-        "id": "14477",
-        "type": "standard",
-        "trips": 1386,
-        "activeDays": 366
-      },
-      {
-        "id": "14678",
-        "type": "standard",
-        "trips": 1377,
-        "activeDays": 357
-      },
-      {
-        "id": "14715",
-        "type": "standard",
-        "trips": 1366,
-        "activeDays": 337
-      },
-      {
-        "id": "14580",
-        "type": "standard",
-        "trips": 1362,
-        "activeDays": 358
+        "trips": 1087,
+        "activeDays": 254
       },
       {
         "id": "14575",
         "type": "standard",
-        "trips": 1361,
-        "activeDays": 344
+        "trips": 1077,
+        "activeDays": 251
       },
       {
-        "id": "12959",
+        "id": "12986",
         "type": "standard",
-        "trips": 1361,
-        "activeDays": 387
+        "trips": 1074,
+        "activeDays": 251
       },
       {
-        "id": "11775",
+        "id": "04849",
         "type": "standard",
-        "trips": 1358,
-        "activeDays": 335
+        "trips": 1071,
+        "activeDays": 251
       },
       {
-        "id": "11864",
+        "id": "14580",
         "type": "standard",
-        "trips": 1345,
-        "activeDays": 345
+        "trips": 1014,
+        "activeDays": 244
+      },
+      {
+        "id": "11030",
+        "type": "standard",
+        "trips": 1006,
+        "activeDays": 234
+      },
+      {
+        "id": "14487",
+        "type": "standard",
+        "trips": 1005,
+        "activeDays": 246
+      },
+      {
+        "id": "14667",
+        "type": "standard",
+        "trips": 1005,
+        "activeDays": 248
+      },
+      {
+        "id": "11855",
+        "type": "standard",
+        "trips": 1005,
+        "activeDays": 237
+      },
+      {
+        "id": "14545",
+        "type": "standard",
+        "trips": 1001,
+        "activeDays": 245
       }
     ]
   }

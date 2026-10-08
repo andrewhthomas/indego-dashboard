@@ -9,7 +9,7 @@ import { formatHour, formatIsoDate, tripPatterns } from "@/lib/trip-patterns";
 import { TrendingUp, Clock, Route } from "lucide-react";
 
 export function TripInsightsCard() {
-  const { meta } = tripPatterns;
+  const { meta, window: recent } = tripPatterns;
   const monthYear = { month: "short", year: "numeric" } as const;
 
   return (
@@ -17,9 +17,10 @@ export function TripInsightsCard() {
       <CardHeader>
         <CardTitle>Trip Insights</CardTitle>
         <CardDescription>
-          Analysis of {meta.totalTrips.toLocaleString()} trips,{" "}
-          {formatIsoDate(meta.firstDate, monthYear)} to{" "}
-          {formatIsoDate(meta.lastDate, monthYear)}
+          {meta.totalTrips.toLocaleString()} trips since{" "}
+          {formatIsoDate(meta.firstDate, monthYear)}. Figures below are for the
+          last 12 months ({formatIsoDate(recent.firstDate, monthYear)} to{" "}
+          {formatIsoDate(recent.lastDate, monthYear)}).
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -27,21 +28,21 @@ export function TripInsightsCard() {
           <div className="text-center p-3 border rounded-lg">
             <TrendingUp className="h-5 w-5 mx-auto mb-1 text-green-600" />
             <div className="font-mono text-xl font-bold">
-              {meta.electricShare}%
+              {recent.electricShare}%
             </div>
             <div className="text-xs text-muted-foreground">Electric</div>
           </div>
           <div className="text-center p-3 border rounded-lg">
             <Clock className="h-5 w-5 mx-auto mb-1 text-blue-600" />
             <div className="font-mono text-xl font-bold">
-              {meta.avgDuration}
+              {recent.avgDuration}
             </div>
             <div className="text-xs text-muted-foreground">Avg Min</div>
           </div>
           <div className="text-center p-3 border rounded-lg">
             <Route className="h-5 w-5 mx-auto mb-1 text-purple-600" />
             <div className="font-mono text-xl font-bold">
-              {meta.avgTripsPerDay.toLocaleString()}
+              {recent.avgTripsPerDay.toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">Daily Avg</div>
           </div>
@@ -51,11 +52,13 @@ export function TripInsightsCard() {
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Peak Hour:</span>
             <span className="font-mono tabular-nums font-medium">
-              {formatHour(meta.peakHour)} to {formatHour(meta.peakHour + 1)}
+              {formatHour(recent.peakHour)} to {formatHour(recent.peakHour + 1)}
             </span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Most Active Day:</span>
+            <span className="text-muted-foreground">
+              Busiest Day on Record:
+            </span>
             <span className="font-mono tabular-nums font-medium">
               {formatIsoDate(meta.busiestDay.date, {
                 month: "short",
