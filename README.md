@@ -104,9 +104,14 @@ to `QUARTER_FILES` in `src/lib/trip-data.ts`):
 
 ```bash
 npx wrangler r2 bucket create indego-trips
+gzip -9 -k indego-trips-2025-q1.csv
 npx wrangler r2 object put indego-trips/indego-trips-2025-q1.csv \
-  --remote --content-type text/csv --file ./indego-trips-2025-q1.csv
+  --remote --content-type text/csv --content-encoding gzip \
+  --file ./indego-trips-2025-q1.csv.gz
 ```
+
+The CSVs are stored gzipped (about 6x smaller on the wire); the object key
+keeps the plain `.csv` name and the Worker passes the gzip bytes through.
 
 For local development, run the same `r2 object put` with `--local` instead of
 `--remote` to seed the local R2 simulator in `.wrangler/state`.
